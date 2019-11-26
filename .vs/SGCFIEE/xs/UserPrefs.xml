@@ -1,0 +1,42 @@
+﻿<Properties StartupConfiguration="{188BE2D8-F72A-4A60-AE24-3F8004CE3276}|Default">
+  <MonoDevelop.Ide.ItemProperties.SGCFIEE PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Views/Home/Principal.cshtml">
+    <Files>
+      <File FileName="Controllers/ConsejoTecnicoController.cs" Line="18" Column="25" />
+      <File FileName="Views/Home/Principal.cshtml" Line="161" Column="50" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SGCFIEE" expanded="True">
+            <Node name="SGCFIEE" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="ConsejoTecnico" expanded="True" />
+                <Node name="Home" expanded="True">
+                  <Node name="Principal.cshtml" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="SGCFIEE" expanded="True">
+            <Node name="SGCFIEE" expanded="True">
+              <Node name="References" selected="True" />
+              <Node name="SGCFIEE" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

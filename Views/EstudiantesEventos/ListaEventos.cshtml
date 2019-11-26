@@ -1,0 +1,25 @@
+﻿@model SGCFIEE.Models.TbEventos
+@{
+    Layout = null;
+    var y = (IEnumerable<TbEventos>)ViewData["NomEventos"];
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ListaEventos</title>
+</head>
+<body>
+    <label>Busque su evento</label>
+    <select required id="evento" class="form-control">
+        <option value="">Seleccionar...</option>
+        @foreach (var item in y)
+        {
+    <option value=@item.IdEventos>@Html.DisplayFor(modelItem => item.Nombre)</option>
+        }
+    </select>
+    <label>Fecha del evento</label>
+    <input id="fech" type="date" class="form-control" placeholder="Fecha del evento">
+</body>
+</html>
