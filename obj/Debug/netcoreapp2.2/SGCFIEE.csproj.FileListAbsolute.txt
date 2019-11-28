@@ -273,9 +273,10 @@ C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\net
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\SGCFIEE.dll
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\SGCFIEE.pdb
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\SGCFIEE.csproj.CopyComplete
-C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesEventos\ListaEventos.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesMovilidad\Index.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesMovilidad\Editar.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesPafis\SolicitudPafi.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesPafis\FormEditar.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesPafis\DetallesPafi.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesEventos\OpcionesEventos.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesEventos\FormEvento.g.cshtml.cs

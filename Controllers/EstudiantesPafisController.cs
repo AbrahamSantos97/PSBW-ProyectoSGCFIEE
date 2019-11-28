@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SGCFIEE.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace SGCFIEE.Controllers
 {
     public class EstudiantesPafisController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             List<TablaPafi> tb_pafi = new List<TablaPafi>();
@@ -93,7 +96,7 @@ namespace SGCFIEE.Controllers
             }
             
         }
-
+        [Authorize]
         public IActionResult FormEditar(int id)
         {
             PafisAcademicos pafi;
@@ -107,7 +110,7 @@ namespace SGCFIEE.Controllers
             }
             return View(pafi);
         }
-
+        [Authorize]
         public IActionResult Editar(PafisAcademicos pafis)
         {
             using(sgcfieeContext context = new sgcfieeContext())
@@ -124,7 +127,7 @@ namespace SGCFIEE.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        [Authorize]
         public IActionResult SolicitudPafi()
         {
              using(sgcfieeContext context = new sgcfieeContext())
@@ -136,30 +139,30 @@ namespace SGCFIEE.Controllers
             }
             return View();
         }
-
+        [Authorize]
         public IActionResult Crear(PafisAcademicos pafis)
         {
             TbPafisAlumno tbpafi = new TbPafisAlumno();
-            tbpafi.RAlumno = 1;
+            tbpafi.RAlumno = (int)HttpContext.Session.GetInt32("IdUsu");
             using(sgcfieeContext context = new sgcfieeContext())
             {
                 context.PafisAcademicos.Add(pafis);
                 context.SaveChanges();
                 TempData["Mensaje"] = "Datos registrados";
-                var x = context.TbPafisAlumno.Count();
-                tbpafi.RInfopafi = x-1;
+                var x = context.PafisAcademicos.Count();
+                tbpafi.RInfopafi = x;
                 context.TbPafisAlumno.Add(tbpafi);
                 context.SaveChanges();
-                TempData["Mensaje"] = "Datos registrados";
+                //TempData["Mensaje"] = "Datos registrados";
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public IActionResult Inscribir(int id)
         {
             TbPafisAlumno pafis = null;
             TbPafisAlumno nuevo = new TbPafisAlumno();
-            int alum = 2;
+            int alum = (int)HttpContext.Session.GetInt32("IdUsu");
             using(sgcfieeContext context = new sgcfieeContext())
             {
                 pafis = context.TbPafisAlumno.Where(a => a.RAlumno == alum && a.RInfopafi == id).FirstOrDefault();
@@ -174,7 +177,7 @@ namespace SGCFIEE.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public IActionResult DetallesPafi(int id)
         {
             List<TablaPafi> tb_pafi = new List<TablaPafi>();

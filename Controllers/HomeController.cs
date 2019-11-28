@@ -13,10 +13,7 @@ namespace SGCFIEE.Controllers
 {
     public class HomeController : Controller
     {
-        public const string SessionKeyName = "USUARIOLOGEADO";
-        public const string SessionKeyID = "IDenti";
-        public const string SessionKeyTipo = "NIVELDEUSUARIO";
-
+        
         public IActionResult Index()
         {
             return View();
@@ -42,20 +39,17 @@ namespace SGCFIEE.Controllers
                 var userIdentity = new ClaimsIdentity(claims, "login");
                 var principal = new ClaimsPrincipal(userIdentity);
                 HttpContext.SignInAsync("PKAT", principal);
-                HttpContext.Session.SetString(SessionKeyName, usu.Nombre);
-                HttpContext.Session.SetInt32(SessionKeyTipo, usu.Tipo);
+                HttpContext.Session.SetString("Matricula", usu.Nombre);
+                HttpContext.Session.SetInt32("TipoUsuario", usu.Tipo);
                 if(usu.Tipo == 3)
                 {
-                    HttpContext.Session.SetInt32 (SessionKeyID, usu.IdAlumno.Value);
+                    HttpContext.Session.SetInt32 ("IdUsu", usu.IdAlumno.Value);
                 }
-                if (usu.Tipo == 2)
+                else
                 {
-                    HttpContext.Session.SetInt32(SessionKeyID, usu.IdAcademico.Value);
+                    HttpContext.Session.SetInt32("IdUsu", usu.IdAcademico.Value);
                 }
-                if (usu.Tipo == 1)
-                {
-                    HttpContext.Session.SetInt32(SessionKeyID, usu.IdAcademico.Value);
-                }
+                
                 return RedirectToAction("Default");
             }
             else
@@ -74,6 +68,16 @@ namespace SGCFIEE.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync("PKAT");
+            HttpContext.Session.Remove("Matricula");
+            HttpContext.Session.Remove("TipoUsuario");
+            HttpContext.Session.Remove("IdUsu");
+            return RedirectToAction("Index");
+
         }
     }
 }

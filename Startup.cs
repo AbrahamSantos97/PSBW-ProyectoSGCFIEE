@@ -44,8 +44,8 @@ namespace SGCFIEE
                 {
                     options.ReturnUrlParameter = "return_url";
                     options.ExpireTimeSpan = System.TimeSpan.FromMinutes(60);
-                    options.LoginPath = "/Home/Principal";
-                    options.LogoutPath = "/Home/Index";
+                    options.LoginPath = "/Home/Index";
+                    options.LogoutPath = "/Home/Logout";
                 });
 
 
@@ -68,6 +68,7 @@ namespace SGCFIEE
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseSession();
             app.UseCookiePolicy();
 

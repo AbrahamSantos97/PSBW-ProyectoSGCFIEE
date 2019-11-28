@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SGCFIEE.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SGCFIEE.Controllers
 {
     public class EstudiantesEventosController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             using(sgcfieeContext context = new sgcfieeContext())
@@ -24,7 +27,7 @@ namespace SGCFIEE.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        [Authorize]
         public IActionResult ListaEventos(int idTipoEvento)
         {
             using(sgcfieeContext context = new sgcfieeContext())
@@ -33,6 +36,49 @@ namespace SGCFIEE.Controllers
                 ViewData["NomEventos"] = eventosEspecificos;
             }
             return View();
+        }
+        [Authorize]
+        public IActionResult OpcionesEventos(TipoEventos eventos)
+        {
+            int x = eventos.IdEventos;
+            if(x == 0)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                using (sgcfieeContext context = new sgcfieeContext())
+                {
+                    var categorias = context.TipoEventos.ToList();
+                    var evento = context.TbEventos.Where(s => s.RTioEvento.Equals(x)).ToList<TbEventos>();
+                    ViewData["tipos"] = categorias;
+                    ViewData["Eventos"] = evento;
+                }
+            }
+            
+            return View();
+        }
+        [Authorize]
+        public IActionResult FormEvento(int id)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                var evento = context.TbEventos.Where(s => s.IdEventos.Equals(id)).Single();
+                ViewData["evento"] = evento;
+            }
+            return View();
+        }
+        [Authorize]
+        public IActionResult RegistrarEventoAlu(EventosAlumnos eventos)
+        {
+            int idAlu = (int)HttpContext.Session.GetInt32("IdUsu");
+            eventos.RAlumno = idAlu;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.EventosAlumnos.Add(eventos);
+                context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

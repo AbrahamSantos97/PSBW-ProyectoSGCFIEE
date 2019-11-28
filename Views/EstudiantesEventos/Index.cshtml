@@ -35,25 +35,24 @@
 
                                     <div class="card-body " id="bar-parent2">
                                         <!-- text input -->
-                                        <form>
+                                        <form asp-action="OpcionesEventos" asp-antiforgery="true">
                                             <div class="form-group">
                                                 <div class="col-md-3 col-sm-3">
-                                                    <label>Elija la categoria del evento</label>
-                                                    <select required id="tipo"class="form-control">
-                                                        <option value="">Seleccionar...</option>
+                                                    <label asp-for="IdEventos">Elija la categoria del evento</label>
+                                                    <select asp-for="IdEventos" id="tipo" class="form-control">
+                                                        <option value="0">Seleccionar...</option>
                                                         @foreach (var item in y)
                                                         {
                                                             <option value=@item.IdEventos>@Html.DisplayFor(modelItem => item.Nombre)</option>
                                                         }
                                                     </select>
-                                                </div><br>
-                                                <div required id="contenedorEventos" class="col-md-6 col-sm-6">
                                                 </div>
+                                                <br />
+                                                      <button id="registrarEvento" type="submit" class="btn btn-success btn-sm m-b-10">
+                                                          Enviar
+                                                      </button>
                                             </div>
                                         </form>
-                                        <button id="registrarEvento" type="submit" class="btn btn-success btn-sm m-b-10">
-                                            Enviar
-                                        </button>
                                     </div>
 
                                 </div>
