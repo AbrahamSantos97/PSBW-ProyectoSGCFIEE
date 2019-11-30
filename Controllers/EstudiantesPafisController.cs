@@ -15,12 +15,15 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            List<TablaPafi> tb_paficito = new List<TablaPafi>();
             List<TablaPafi> tb_pafi = new List<TablaPafi>();
             List<TablaPafi> correcto = new List<TablaPafi>();
             TablaPafi aux = new TablaPafi();
-            using(sgcfieeContext context = new sgcfieeContext())
+            List<TbPafisAlumno> pafi_alum = new List<TbPafisAlumno>();
+            int idAlu = (int)HttpContext.Session.GetInt32("IdUsu");
+            using (sgcfieeContext context = new sgcfieeContext())
             {
-                tb_pafi = (from d in context.TbPafisAlumno
+                tb_paficito = (from d in context.TbPafisAlumno
                            join
                             p in context.PafisAcademicos on d.RInfopafi equals p.IdPafis
                            join
@@ -37,9 +40,33 @@ namespace SGCFIEE.Controllers
                                ApePaterno = a.ApellidoPaterno,
                                ApeMaterno = a.ApellidoMaterno,
                                ClvSalon = s.ClaveSalon,
+                               ocupado = 0,
+                               estado = p.Estado.Value
                            }
                           ).ToList();
+
+                pafi_alum = context.TbPafisAlumno.Where(s => s.RAlumno.Equals(idAlu)).ToList();
+
             }
+            foreach(TablaPafi x in tb_paficito)
+            {
+                if(x.estado == 0)
+                {
+                    tb_pafi.Add(x);
+                }
+            }
+
+            foreach(TablaPafi t in tb_pafi)
+            {
+                foreach(TbPafisAlumno pa in pafi_alum)
+                {
+                    if(t.idPafi == pa.RInfopafi)
+                    {
+                        t.ocupado = 1;
+                    }
+                }
+            }
+
             if(tb_pafi.Count > 0)
             {
                 foreach(TablaPafi tp in tb_pafi)
@@ -54,7 +81,6 @@ namespace SGCFIEE.Controllers
                     }
                     tp.TotalAlum = contador;
                 }
-                int iterator = 0;
                 foreach(TablaPafi tb in tb_pafi)
                 {
                     if(correcto.Count == 0)
@@ -142,10 +168,56 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult Crear(PafisAcademicos pafis)
         {
+            DateTime fech = DateTime.Today.Date;
+            int dia, mes, ano;
+            dia = fech.Day;
+            mes = fech.Month;
+            ano = fech.Year;
+            pafis.Estado = 0;
             TbPafisAlumno tbpafi = new TbPafisAlumno();
+            int idPa=0;
             tbpafi.RAlumno = (int)HttpContext.Session.GetInt32("IdUsu");
+            List<TipoPeriodo> tp = new List<TipoPeriodo>();
             using(sgcfieeContext context = new sgcfieeContext())
             {
+
+                tp = context.TipoPeriodo.ToList();
+                foreach(TipoPeriodo periodo in tp)
+                {
+                    int dia2, mes2, ano2;
+                    DateTime dt = periodo.FechaInicio.Value;
+                    dia2 = dt.Day;
+                    mes2 = dt.Month;
+                    ano2 = dt.Year;
+                    if(dia2 <= dia && mes2 <= mes && ano2 <= ano)
+                    {
+                        DateTime dt2 = periodo.FechaFin.Value;
+                        dia2 = dt2.Day;
+                        mes2 = dt2.Month;
+                        ano2 = dt2.Year;
+                        if (ano2 == ano)
+                        {
+                            if (mes2 >= mes)
+                            {
+                                idPa = periodo.IdPeriodo;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if(ano2 > ano)
+                            {
+                                idPa = periodo.IdPeriodo;
+                                break;
+                            }
+                        }
+                    }   
+                }
+                if(idPa == 0)
+                {
+                    return RedirectToAction("Index");
+                }
+                pafis.IdPeriodo = idPa;
                 context.PafisAcademicos.Add(pafis);
                 context.SaveChanges();
                 TempData["Mensaje"] = "Datos registrados";
@@ -153,7 +225,6 @@ namespace SGCFIEE.Controllers
                 tbpafi.RInfopafi = x;
                 context.TbPafisAlumno.Add(tbpafi);
                 context.SaveChanges();
-                //TempData["Mensaje"] = "Datos registrados";
             }
             return RedirectToAction("Index");
         }

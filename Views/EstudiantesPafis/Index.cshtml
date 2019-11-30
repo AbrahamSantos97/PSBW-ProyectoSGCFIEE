@@ -61,9 +61,19 @@
                                     <a asp-route-id="@item.idPafi" asp-action="Eliminar" class="btn btn-danger btn-xs eliminar" title="Eliminar">
                                         <i class="fa fa-trash-o "></i>
                                     </a>
-                                    <a asp-route-id="@item.idPafi" asp-controller="EstudiantesPafis" asp-action="Inscribir" class="btn btn-success btn-xs eliminar" title="Inscribir">
-                                        <i class="fa fa-sign-in "></i>
-                                    </a>
+                                    @if (item.ocupado == 0)
+                                    {
+                                        <a asp-route-id="@item.idPafi" asp-controller="EstudiantesPafis" asp-action="Inscribir" class="btn btn-success btn-xs eliminar" title="Enlistar">
+                                            <i class="fa fa-sign-in "></i>
+                                        </a>
+                                    }
+                                    @if (item.ocupado == 1)
+                                    {
+                                        <a asp-route-id="@item.idPafi" asp-controller="EstudiantesPafis" asp-action="Inscribir" class="btn btn-danger btn-xs eliminar" title="Desenlistar">
+                                            <i class="fa fa-sign-out "></i>
+                                        </a>
+                                    }
+
                                 </td>
                             </tr>
                         }

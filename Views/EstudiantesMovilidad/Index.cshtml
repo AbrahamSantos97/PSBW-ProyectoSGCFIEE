@@ -1,7 +1,8 @@
-﻿@model IEnumerable<SGCFIEE.Models.CtMovilidades>
+﻿@model SGCFIEE.Models.CtMovilidades;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Home/Principal.cshtml";
+    var modelo = (IEnumerable<CtMovilidades>)ViewData["Movilidades"];
 }
 <!DOCTYPE html>
 <html>
@@ -18,12 +19,7 @@
                             <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
                         </div>
                     </div>
-                    <div class="p-rl-20">
-                        <ul class="nav customtab nav-tabs" role="tablist">
-                            <li id="tb1" class="nav-item"><a href="#tab1" class="nav-link active show" data-toggle="tab">Movilidad nacional</a></li>
-                            <li id="tb2" class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab">Movilidad internacional</a></li>
-                        </ul>
-                    </div>
+                    
                 </div>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -31,14 +27,31 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card-body ">
-                                            <div class="row p-b-20">
-                                                <div class="col-md-12 col-sm-12 col-12">
-                                                    <div class="btn-group">
-                                                        <a asp-controller="EstudiantesInformacion" asp-action="Crear" class="btn btn-success btn-sm m-b-10">
-                                                            ConsultarEstado <i class="fa fa-plus"></i>
-                                                        </a>
+                                        <div class="row p-b-20">
+                                            <div class="col-md-12 col-sm-12 col-12">
+                                                <form asp-action="Index" asp-antiforgery="true">
+                                                    <div class="form-group">
+                                                        <div class="col-md-3 col-sm-3">
+                                                            <label asp-for="TipoMovilidades">Elija el tipo de movilidad</label>
+                                                            <select asp-for="TipoMovilidades" id="tipo" class="form-control">
+                                                                <option value="0">Seleccionar...</option>
+                                                                <option value="1">Nacional</option>
+                                                                <option value="2">Internacional</option>
+                                                            </select>
+                                                        </div>
+                                                        <br />
+                                                        <button id="BuscarMov" type="submit" class="btn btn-success btn-sm m-b-10">
+                                                            Enviar
+                                                        </button>
                                                     </div>
+                                                </form>
+                                                <br />
+                                                <div class="btn-group">
+                                                    <a asp-controller="EstudiantesInformacion" asp-action="Crear" class="btn btn-success btn-sm m-b-10">
+                                                        ConsultarEstado <i class="fa fa-plus"></i>
+                                                    </a>
                                                 </div>
+                                            </div>
                                             </div> 
                                             <table class="table table-striped table-bordered table-hover table-checkable order-column" style="width: 100%" id="example1">
                                                 <thead>
@@ -50,11 +63,9 @@
                                                         <th class="center">Acciones</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    @foreach (var item in Model)
+                                                <tbody> 
+                                                    @foreach (var item in modelo)
                                                     {
-                                                        @if (item.TipoMovilidades == 1)
-                                                        {
                                                             <tr class="odd gradeX">
                                                                 <td class="center">@Html.DisplayFor(modelItem => item.PaisDestinoMovilidad)</td>
                                                                 <td class="center">@Html.DisplayFor(modelItem => item.EntidadDestinoMovilidad)</td>
@@ -72,75 +83,16 @@
                                                                     </a>
                                                                 </td>
                                                             </tr>
-                                                        }
-
                                                     }
                                                 </tbody>
                                             </table>
                                         </div>
-                                    
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab2">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="card-body ">
-                                        <div class="row p-b-20">
-                                            <div class="col-md-12 col-sm-12 col-12">
-                                                <div class="btn-group">
-                                                    <a asp-controller="EstudiantesInformacion" asp-action="Crear" class="btn btn-success btn-sm m-b-10">
-                                                        ConsultarEstado <i class="fa fa-plus"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" style="width: 100%" id="example3">
-                                            
-                                            <thead style="width: auto">
-                                             
-                                                <tr>
-                                                    <th style="width: auto" class="center"> País destino    </th>
-                                                    <th style="width: auto" class="center"> Entidad destino </th>
-                                                    <th style="width: auto" class="center"> Escuela participante </th>
-                                                    <th style="width: auto" class="center"> Tiempo de permanencia</th>
-                                                    <th class="center">Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in Model)
-                                                {
-                                                    @if (item.TipoMovilidades == 2)
-                                                    {
-                                                        <tr class="odd gradeX">
-                                                            <td class="center">@Html.DisplayFor(modelItem => item.PaisDestinoMovilidad)</td>
-                                                            <td class="center">@Html.DisplayFor(modelItem => item.EntidadDestinoMovilidad)</td>
-                                                            <td class="center">@Html.DisplayFor(modelItem => item.EscuelaDestinoMovilidad)</td>
-                                                            <td class="center">@Html.DisplayFor(modelItem => item.TiempoPermanenciaMovilidad)</td>
-                                                            <td>
-                                                                <a asp-route-id="@item.IdCtMovilidades" asp-controller="EstudiantesMovilidad" asp-action="Editar" class="btn btn-primary btn-xs editar" title="Editar">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </a>
-                                                                <a asp-route-id="@item.IdCtMovilidades" asp-controller="EstudiantesMovilidad" asp-action="Eliminar" class="btn btn-danger btn-xs eliminar" title="Eliminar">
-                                                                    <i class="fa fa-trash-o "></i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    }
-
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-                        </div>
-
                     </div>
-                
+            </div>
         </div>
     </div>
 </div>
-</div>
-    </div>
 </html>

@@ -13,14 +13,19 @@ namespace SGCFIEE.Controllers
     {
         // GET: EstudiantesMovilidad
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(CtMovilidades movi)
         {
-            List<CtMovilidades> movilidades = new List<CtMovilidades>();
             using(sgcfieeContext context = new sgcfieeContext())
             {
-                movilidades = context.CtMovilidades.ToList<CtMovilidades>();
+                var movilidades = context.CtMovilidades.Where(s => s.TipoMovilidades.Equals(movi.TipoMovilidades)).ToList();
+                ViewData["Movilidades"] = movilidades;
             }
-            return View(movilidades);
+            return View();
+        }
+        [Authorize]
+        public IActionResult EleccionMovilidades()
+        {
+            return View();
         }
         
 
