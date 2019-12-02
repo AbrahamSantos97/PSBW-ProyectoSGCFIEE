@@ -47,7 +47,7 @@
                                                 </form>
                                                 <br />
                                                 <div class="btn-group">
-                                                    <a asp-controller="EstudiantesInformacion" asp-action="Crear" class="btn btn-success btn-sm m-b-10">
+                                                    <a asp-controller="EstudiantesMovilidad" asp-action="ConsultarEstatus" class="btn btn-success btn-sm m-b-10">
                                                         ConsultarEstado <i class="fa fa-plus"></i>
                                                     </a>
                                                 </div>
@@ -78,8 +78,8 @@
                                                                     <a asp-route-id="@item.IdCtMovilidades" asp-controller="EstudiantesMovilidad" asp-action="Eliminar" class="btn btn-danger btn-xs eliminar" title="Eliminar">
                                                                         <i class="fa fa-trash-o "></i>
                                                                     </a>
-                                                                    <a asp-route-id="@item.IdCtMovilidades" asp-controller="EstudiantesMovilidad" asp-action="Inscribir" class="btn btn-danger btn-xs eliminar" title="Eliminar">
-                                                                        <i class="fa fa-trash-o "></i>
+                                                                    <a asp-route-id="@item.IdCtMovilidades" asp-controller="EstudiantesMovilidad" asp-action="FormInscribir" class="btn btn-success btn-xs eliminar" title="Inscribir">
+                                                                        <i class="fa fa-sign-in "></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>

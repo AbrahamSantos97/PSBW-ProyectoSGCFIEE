@@ -48,14 +48,14 @@ namespace SGCFIEE.Controllers
                 pafi_alum = context.TbPafisAlumno.Where(s => s.RAlumno.Equals(idAlu)).ToList();
 
             }
-            foreach(TablaPafi x in tb_paficito)
+            foreach(TablaPafi z in tb_paficito)
             {
-                if(x.estado == 0)
+                if(z.estado == 0)
                 {
-                    tb_pafi.Add(x);
+                    tb_pafi.Add(z);
                 }
             }
-
+            
             foreach(TablaPafi t in tb_pafi)
             {
                 foreach(TbPafisAlumno pa in pafi_alum)
@@ -66,7 +66,6 @@ namespace SGCFIEE.Controllers
                     }
                 }
             }
-
             if(tb_pafi.Count > 0)
             {
                 foreach(TablaPafi tp in tb_pafi)
@@ -169,30 +168,29 @@ namespace SGCFIEE.Controllers
         public IActionResult Crear(PafisAcademicos pafis)
         {
             DateTime fech = DateTime.Today.Date;
-            int dia, mes, ano;
-            dia = fech.Day;
+            int mes, ano;
             mes = fech.Month;
             ano = fech.Year;
             pafis.Estado = 0;
+            pafis.NumHoras = 20;
+            pafis.Tipopafi = 0;
+            pafis.Solicitud = 0;
             TbPafisAlumno tbpafi = new TbPafisAlumno();
             int idPa=0;
             tbpafi.RAlumno = (int)HttpContext.Session.GetInt32("IdUsu");
             List<TipoPeriodo> tp = new List<TipoPeriodo>();
             using(sgcfieeContext context = new sgcfieeContext())
             {
-
                 tp = context.TipoPeriodo.ToList();
                 foreach(TipoPeriodo periodo in tp)
                 {
-                    int dia2, mes2, ano2;
+                    int mes2, ano2;
                     DateTime dt = periodo.FechaInicio.Value;
-                    dia2 = dt.Day;
                     mes2 = dt.Month;
                     ano2 = dt.Year;
-                    if(dia2 <= dia && mes2 <= mes && ano2 <= ano)
+                    if(mes2 <= mes && ano2 <= ano)
                     {
                         DateTime dt2 = periodo.FechaFin.Value;
-                        dia2 = dt2.Day;
                         mes2 = dt2.Month;
                         ano2 = dt2.Year;
                         if (ano2 == ano)
@@ -251,33 +249,40 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult DetallesPafi(int id)
         {
-            List<TablaPafi> tb_pafi = new List<TablaPafi>();
+            List<InformacionPafiCompleta> tb_pafi = new List<InformacionPafiCompleta>();
             using(sgcfieeContext context = new sgcfieeContext())
             {
                 tb_pafi = (from p in context.PafisAcademicos
                            join a in context.Academicos on p.IdAcademico equals a.IdAcademicos
                            join s in context.TbSalones on p.IdSalon equals s.IdTbSalones
                            select
-                           new TablaPafi
+                           new InformacionPafiCompleta
                            {
                                idPafi = p.IdPafis,
-                               NombrePafi = p.Nombre,
+                               nombrePafi = p.Nombre,
                                Horario = p.Horario,
-                               NombreMaestro = a.Nombre,
+                               nombreMaestro = a.Nombre,
                                ApePaterno = a.ApellidoPaterno,
                                ApeMaterno = a.ApellidoMaterno,
-                               ClvSalon = s.ClaveSalon,
+                               clave_salon = s.ClaveSalon,
+                               estado = p.Estado.Value,
+                               totHoras = p.NumHoras
                            }).ToList();
             }
-            TablaPafi correcto = new TablaPafi();
-            foreach(TablaPafi item in tb_pafi)
+            InformacionPafiCompleta correcto = new InformacionPafiCompleta();
+            foreach(InformacionPafiCompleta item in tb_pafi)
             {
                 if(item.idPafi == id)
                 {
+                    if(item.estado == 0)
+                    {
+                        item.edo = "Solicitud";
+                    }
                     correcto = item;
                     break;
                 }
             }
+
             return View(correcto);
         }
     }
