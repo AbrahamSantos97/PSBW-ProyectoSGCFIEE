@@ -135,6 +135,9 @@ namespace SGCFIEE.Controllers
             }
             return View(pafi);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public IActionResult Editar(PafisAcademicos pafis)
         {
@@ -152,6 +155,7 @@ namespace SGCFIEE.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         [Authorize]
         public IActionResult SolicitudPafi()
         {
@@ -164,6 +168,9 @@ namespace SGCFIEE.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public IActionResult Crear(PafisAcademicos pafis)
         {

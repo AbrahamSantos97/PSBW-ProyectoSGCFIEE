@@ -43,6 +43,8 @@ namespace SGCFIEE.Controllers
             return View(datosMovi);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult GuardarEdicion(CtMovilidades movilidades)
         {
             using(sgcfieeContext context = new sgcfieeContext())
@@ -54,6 +56,7 @@ namespace SGCFIEE.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         // GET: EstudiantesMovilidad/Delete/5
         public ActionResult Delete(int id)
         {
@@ -71,6 +74,7 @@ namespace SGCFIEE.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult MostrarListaAlumnos(FormInscribirMovilidad movi)
         {
             int x = movi.idMovilidad;
@@ -116,6 +120,7 @@ namespace SGCFIEE.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult MostrarInformacionInscripcion(FormInscribirMovilidad movi)
         {
             int movilidad = movi.idMovilidad;
@@ -142,6 +147,8 @@ namespace SGCFIEE.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult GuardarInscripcion(FormInscribirMovilidad formovi)
         {
             TbMovilidad tb = new TbMovilidad();
@@ -156,6 +163,7 @@ namespace SGCFIEE.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult ConsultarEstatus()
         {
             List<Calificaciones_Alumno_Movilidad> cam;
