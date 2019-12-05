@@ -13,6 +13,7 @@ namespace SGCFIEE.Models
             TbBuzonDeQuejas = new HashSet<TbBuzonDeQuejas>();
             TbExamenalumno = new HashSet<TbExamenalumno>();
             TbHorario = new HashSet<TbHorario>();
+            TbInstanciafinalAlumno = new HashSet<TbInstanciafinalAlumno>();
             TbMovilidad = new HashSet<TbMovilidad>();
             TbPafisAlumno = new HashSet<TbPafisAlumno>();
             TrabajosRecepcionales = new HashSet<TrabajosRecepcionales>();
@@ -39,6 +40,7 @@ namespace SGCFIEE.Models
         public virtual ICollection<TbBuzonDeQuejas> TbBuzonDeQuejas { get; set; }
         public virtual ICollection<TbExamenalumno> TbExamenalumno { get; set; }
         public virtual ICollection<TbHorario> TbHorario { get; set; }
+        public virtual ICollection<TbInstanciafinalAlumno> TbInstanciafinalAlumno { get; set; }
         public virtual ICollection<TbMovilidad> TbMovilidad { get; set; }
         public virtual ICollection<TbPafisAlumno> TbPafisAlumno { get; set; }
         public virtual ICollection<TrabajosRecepcionales> TrabajosRecepcionales { get; set; }

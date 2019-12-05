@@ -12,5 +12,6 @@ namespace SGCFIEE.Models
         public int idPE { get; set; }
         public String area { get; set; }
         public int creditos { get; set; }
+        public int idEE { get; set; }
     }
 }

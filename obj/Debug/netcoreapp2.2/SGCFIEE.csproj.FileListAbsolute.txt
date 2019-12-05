@@ -312,3 +312,5 @@ C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\net
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\InsertarAcademias.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\InsertarPTransversal.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\InsertarTContratacion.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\SeleccionarCarrera.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\MostrarMaterias.g.cshtml.cs

@@ -201,11 +201,11 @@ namespace SGCFIEE.Controllers
             int total = pe.Creditos.Value / 2;
             if (suma >= total)
             {
-                ViewData["consejo"] = "El total de tus creditos cursados supera a la mitad de los creditos de tu carrera, ve con tu tutor a checar tus opciones\nTotal de creditos: " + total;
+                ViewData["consejo"] = "El total de tus creditos: "+suma+" supera a la mitad de los creditos de tu carrera, ve con tu tutor a checar tus opciones\nTotal de creditos necesarios: " + total;
             }
             else
             {
-                ViewData["consejo"] = "El total de tus creditos cursados no supera a la mitad de los creditos de tu carrera, te recomendamos checar en futuros periodos\nTotal de creditos: " + total;
+                ViewData["consejo"] = "El total de tus creditos: "+suma+" no supera a la mitad de los creditos de tu carrera, te recomendamos checar en futuros periodos\nTotal de creditos necesarios: " + total;
             }
             return View(cam);
         }

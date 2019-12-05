@@ -32,6 +32,8 @@ namespace SGCFIEE.Models
         public virtual DbSet<ContratacionPtc> ContratacionPtc { get; set; }
         public virtual DbSet<CoordinadorAcademia> CoordinadorAcademia { get; set; }
         public virtual DbSet<CoordinadorProgramaTransversal> CoordinadorProgramaTransversal { get; set; }
+        public virtual DbSet<CtEmpresaServPrac> CtEmpresaServPrac { get; set; }
+        public virtual DbSet<CtExperienciarecepcional> CtExperienciarecepcional { get; set; }
         public virtual DbSet<CtMovilidades> CtMovilidades { get; set; }
         public virtual DbSet<CtProblemas> CtProblemas { get; set; }
         public virtual DbSet<CtTipoCalificacion> CtTipoCalificacion { get; set; }
@@ -80,10 +82,12 @@ namespace SGCFIEE.Models
         public virtual DbSet<TbEventos> TbEventos { get; set; }
         public virtual DbSet<TbExamenalumno> TbExamenalumno { get; set; }
         public virtual DbSet<TbHorario> TbHorario { get; set; }
+        public virtual DbSet<TbInstanciafinalAlumno> TbInstanciafinalAlumno { get; set; }
         public virtual DbSet<TbMovilidad> TbMovilidad { get; set; }
         public virtual DbSet<TbPafisAlumno> TbPafisAlumno { get; set; }
         public virtual DbSet<TbRubrosexamenes> TbRubrosexamenes { get; set; }
         public virtual DbSet<TbSalones> TbSalones { get; set; }
+        public virtual DbSet<TbServiciopracticas> TbServiciopracticas { get; set; }
         public virtual DbSet<TipoCertificacion> TipoCertificacion { get; set; }
         public virtual DbSet<TipoContratacionee> TipoContratacionee { get; set; }
         public virtual DbSet<TipoDistincionTa> TipoDistincionTa { get; set; }
@@ -868,6 +872,57 @@ namespace SGCFIEE.Models
                     .HasConstraintName("fk_CPT_ProgramasT");
             });
 
+            modelBuilder.Entity<CtEmpresaServPrac>(entity =>
+            {
+                entity.HasKey(e => e.IdCtEmpresas)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("ct_empresa_serv_prac");
+
+                entity.Property(e => e.IdCtEmpresas)
+                    .HasColumnName("idCt_Empresas")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Direccion).HasColumnType("varchar(100)");
+
+                entity.Property(e => e.Nombre).HasColumnType("varchar(45)");
+
+                entity.Property(e => e.Telefono).HasColumnType("varchar(20)");
+
+                entity.Property(e => e.Tipo).HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<CtExperienciarecepcional>(entity =>
+            {
+                entity.HasKey(e => e.IdCtExperienciaRecepcional)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("ct_experienciarecepcional");
+
+                entity.HasIndex(e => e.RAsesor)
+                    .HasName("fk_asesorAcademico_er_idx");
+
+                entity.Property(e => e.IdCtExperienciaRecepcional)
+                    .HasColumnName("idCt_ExperienciaRecepcional")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.FechaFin).HasColumnType("date");
+
+                entity.Property(e => e.Nombre).HasColumnType("varchar(45)");
+
+                entity.Property(e => e.RAsesor)
+                    .HasColumnName("R_Asesor")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Tipo).HasColumnType("int(11)");
+
+                entity.HasOne(d => d.RAsesorNavigation)
+                    .WithMany(p => p.CtExperienciarecepcional)
+                    .HasForeignKey(d => d.RAsesor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_asesorAcademico_er");
+            });
+
             modelBuilder.Entity<CtMovilidades>(entity =>
             {
                 entity.HasKey(e => e.IdCtMovilidades)
@@ -1428,13 +1483,11 @@ namespace SGCFIEE.Models
                 entity.HasOne(d => d.RAlumnoNavigation)
                     .WithMany(p => p.EventosAlumnos)
                     .HasForeignKey(d => d.RAlumno)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_eventos_alumnos");
 
                 entity.HasOne(d => d.REventoNavigation)
                     .WithMany(p => p.EventosAlumnos)
                     .HasForeignKey(d => d.REvento)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_eventos_eventos");
             });
 
@@ -1944,13 +1997,11 @@ namespace SGCFIEE.Models
                 entity.HasOne(d => d.IdExperienciaEducativaNavigation)
                     .WithMany(p => p.MapaCurricular)
                     .HasForeignKey(d => d.IdExperienciaEducativa)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_mapa_ee");
 
                 entity.HasOne(d => d.IdProgramaEducativoNavigation)
                     .WithMany(p => p.MapaCurricular)
                     .HasForeignKey(d => d.IdProgramaEducativo)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_mapa_programaeducativo");
             });
 
@@ -2092,19 +2143,16 @@ namespace SGCFIEE.Models
                 entity.HasOne(d => d.IdAcademicoNavigation)
                     .WithMany(p => p.PafisAcademicos)
                     .HasForeignKey(d => d.IdAcademico)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_pafis_academicos");
 
                 entity.HasOne(d => d.IdPeriodoNavigation)
                     .WithMany(p => p.PafisAcademicos)
                     .HasForeignKey(d => d.IdPeriodo)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_pafis_periodo");
 
                 entity.HasOne(d => d.IdProgramaImpactaNavigation)
                     .WithMany(p => p.PafisAcademicos)
                     .HasForeignKey(d => d.IdProgramaImpacta)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_pafis_programa");
 
                 entity.HasOne(d => d.IdSalonNavigation)
@@ -2664,7 +2712,6 @@ namespace SGCFIEE.Models
                 entity.HasOne(d => d.RTipoCalificacionNavigation)
                     .WithMany(p => p.TbCalificacion)
                     .HasForeignKey(d => d.RTipoCalificacion)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_calif_tipcalif");
             });
 
@@ -2731,7 +2778,6 @@ namespace SGCFIEE.Models
                 entity.HasOne(d => d.RTioEventoNavigation)
                     .WithMany(p => p.TbEventos)
                     .HasForeignKey(d => d.RTioEvento)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_eventos_tipo_eventos");
             });
 
@@ -2825,26 +2871,70 @@ namespace SGCFIEE.Models
                 entity.HasOne(d => d.RAlumnoNavigation)
                     .WithMany(p => p.TbHorario)
                     .HasForeignKey(d => d.RAlumno)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_horario_alum");
 
                 entity.HasOne(d => d.RExperienciaPeriodoNavigation)
                     .WithMany(p => p.TbHorario)
                     .HasForeignKey(d => d.RExperienciaPeriodo)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_horario_exp_educ_periodo");
 
                 entity.HasOne(d => d.RSalonNavigation)
                     .WithMany(p => p.TbHorario)
                     .HasForeignKey(d => d.RSalon)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_horario_salon");
 
                 entity.HasOne(d => d.RTipoCalifNavigation)
                     .WithMany(p => p.TbHorario)
                     .HasForeignKey(d => d.RTipoCalif)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_horario_calif");
+            });
+
+            modelBuilder.Entity<TbInstanciafinalAlumno>(entity =>
+            {
+                entity.HasKey(e => e.IdTbInstanciaFinalAlumno)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("tb_instanciafinal_alumno");
+
+                entity.HasIndex(e => e.RAlumno)
+                    .HasName("fk_InstanciaF_Alumno_idx");
+
+                entity.HasIndex(e => e.RExpRep)
+                    .HasName("fk_InstanciaF_ER_idx");
+
+                entity.HasIndex(e => e.RServPrac)
+                    .HasName("fk_InstanciaF_SP_idx");
+
+                entity.Property(e => e.IdTbInstanciaFinalAlumno)
+                    .HasColumnName("idTB_InstanciaFinal_Alumno")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RAlumno)
+                    .HasColumnName("R_Alumno")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RExpRep)
+                    .HasColumnName("R_ExpRep")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RServPrac)
+                    .HasColumnName("R_ServPrac")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.RAlumnoNavigation)
+                    .WithMany(p => p.TbInstanciafinalAlumno)
+                    .HasForeignKey(d => d.RAlumno)
+                    .HasConstraintName("fk_InstanciaF_Alumno");
+
+                entity.HasOne(d => d.RExpRepNavigation)
+                    .WithMany(p => p.TbInstanciafinalAlumno)
+                    .HasForeignKey(d => d.RExpRep)
+                    .HasConstraintName("fk_InstanciaF_ER");
+
+                entity.HasOne(d => d.RServPracNavigation)
+                    .WithMany(p => p.TbInstanciafinalAlumno)
+                    .HasForeignKey(d => d.RServPrac)
+                    .HasConstraintName("fk_InstanciaF_SP");
             });
 
             modelBuilder.Entity<TbMovilidad>(entity =>
@@ -2882,19 +2972,16 @@ namespace SGCFIEE.Models
                 entity.HasOne(d => d.RAlumnoNavigation)
                     .WithMany(p => p.TbMovilidad)
                     .HasForeignKey(d => d.RAlumno)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_movilidad_alumno");
 
                 entity.HasOne(d => d.RMovilidadNavigation)
                     .WithMany(p => p.TbMovilidad)
                     .HasForeignKey(d => d.RMovilidad)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_alumovilidad_dt_movilidad");
 
                 entity.HasOne(d => d.RPeriodoNavigation)
                     .WithMany(p => p.TbMovilidad)
                     .HasForeignKey(d => d.RPeriodo)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_movilidad_tipoperi");
             });
 
@@ -2926,13 +3013,11 @@ namespace SGCFIEE.Models
                 entity.HasOne(d => d.RAlumnoNavigation)
                     .WithMany(p => p.TbPafisAlumno)
                     .HasForeignKey(d => d.RAlumno)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_pafisalum_alumno");
 
                 entity.HasOne(d => d.RInfopafiNavigation)
                     .WithMany(p => p.TbPafisAlumno)
                     .HasForeignKey(d => d.RInfopafi)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_pafisalum_pafiasacad");
             });
 
@@ -2970,6 +3055,34 @@ namespace SGCFIEE.Models
                     .HasColumnType("varchar(45)");
 
                 entity.Property(e => e.Edificio).HasColumnType("varchar(45)");
+            });
+
+            modelBuilder.Entity<TbServiciopracticas>(entity =>
+            {
+                entity.HasKey(e => e.IdTbServicioPracticas)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("tb_serviciopracticas");
+
+                entity.HasIndex(e => e.REmpresa)
+                    .HasName("fk_empresaServ_idx");
+
+                entity.Property(e => e.IdTbServicioPracticas)
+                    .HasColumnName("idTB_ServicioPracticas")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.FechaFin).HasColumnType("date");
+
+                entity.Property(e => e.FechaInicio).HasColumnType("date");
+
+                entity.Property(e => e.REmpresa)
+                    .HasColumnName("R_Empresa")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.REmpresaNavigation)
+                    .WithMany(p => p.TbServiciopracticas)
+                    .HasForeignKey(d => d.REmpresa)
+                    .HasConstraintName("fk_empresaServ");
             });
 
             modelBuilder.Entity<TipoCertificacion>(entity =>

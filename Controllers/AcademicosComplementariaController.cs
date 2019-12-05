@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SGCFIEE.Models;
 
@@ -409,6 +410,83 @@ namespace SGCFIEE.Controllers
                 context.SaveChanges();
             }
             return RedirectToAction("VistaOpcionesCatalogos");
+        }
+
+        public IActionResult SeleccionarCarrera()
+        {
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                var x = context.ProgramaEducativo.ToList();
+                ViewData["carreras"] = x;
+            }
+            return View();
+        }
+
+        public IActionResult MostrarMaterias(ProgramaEducativo pe)
+        {
+            int proe = pe.IdProgramaEducativo;
+            if(proe == 0)
+            {
+                proe = (int)HttpContext.Session.GetInt32("programaE");
+            }
+            else
+            {
+                HttpContext.Session.SetInt32("programaE", proe);
+            }
+            List<ExperienciaEducativa> ee = new List<ExperienciaEducativa>();
+            List<TablaMatPE> ee2 = new List<TablaMatPE>();
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                ee = context.ExperienciaEducativa.ToList();
+                ee2 = (from m in context.MapaCurricular
+                       join e in context.ExperienciaEducativa on m.IdExperienciaEducativa equals e.IdExperienciaEducativa
+                       select
+                       new TablaMatPE
+                       {
+                           idEE = e.IdExperienciaEducativa,
+                           idPE = m.IdProgramaEducativo.Value,
+                           nomMat = e.Nombre,
+                           creditos = e.Creditos.Value
+                       }).Where(s => s.idPE == proe).ToList();
+
+                var x = context.ProgramaEducativo.ToList();
+                ViewData["carreras"] = x;
+
+            }
+            int band = 0;
+            List<ExperienciaEducativa> correcto = new List<ExperienciaEducativa>();
+            foreach (ExperienciaEducativa exp in ee)
+            {
+                band = 0;
+                foreach (TablaMatPE tpe in ee2)
+                {
+                    if(exp.IdExperienciaEducativa == tpe.idEE)
+                    {
+                        band = 1;
+                    }
+                }
+                if(band == 0)
+                {
+                    correcto.Add(exp);
+                }
+            }
+            ViewData["materias"] = correcto;
+
+            return View();
+        }
+
+        public IActionResult CrearMapaC(int id)
+        {
+            MapaCurricular mc = new MapaCurricular();
+            mc.IdExperienciaEducativa = id;
+            int pe = (int)HttpContext.Session.GetInt32("programaE");
+            mc.IdProgramaEducativo = pe;
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                context.MapaCurricular.Add(mc);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarMaterias");
         }
     } 
 }

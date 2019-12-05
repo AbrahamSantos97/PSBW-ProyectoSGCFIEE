@@ -18,6 +18,7 @@ namespace SGCFIEE.Models
             ContratacionPtc = new HashSet<ContratacionPtc>();
             CoordinadorAcademia = new HashSet<CoordinadorAcademia>();
             CoordinadorProgramaTransversal = new HashSet<CoordinadorProgramaTransversal>();
+            CtExperienciarecepcional = new HashSet<CtExperienciarecepcional>();
             CursosDiplomadoFormacion = new HashSet<CursosDiplomadoFormacion>();
             CursosTalleresAplicacion = new HashSet<CursosTalleresAplicacion>();
             DistincionesTa = new HashSet<DistincionesTa>();
@@ -82,6 +83,7 @@ namespace SGCFIEE.Models
         public virtual ICollection<ContratacionPtc> ContratacionPtc { get; set; }
         public virtual ICollection<CoordinadorAcademia> CoordinadorAcademia { get; set; }
         public virtual ICollection<CoordinadorProgramaTransversal> CoordinadorProgramaTransversal { get; set; }
+        public virtual ICollection<CtExperienciarecepcional> CtExperienciarecepcional { get; set; }
         public virtual ICollection<CursosDiplomadoFormacion> CursosDiplomadoFormacion { get; set; }
         public virtual ICollection<CursosTalleresAplicacion> CursosTalleresAplicacion { get; set; }
         public virtual ICollection<DistincionesTa> DistincionesTa { get; set; }
