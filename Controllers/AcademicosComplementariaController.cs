@@ -211,7 +211,7 @@ namespace SGCFIEE.Controllers
                 context.TipoPersonal.Add(personal);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarPersonal");
         }
 
         [Authorize]
@@ -229,7 +229,7 @@ namespace SGCFIEE.Controllers
                 context.TipoPuesto.Add(puesto);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarPuestos");
         }
 
         [Authorize]
@@ -247,7 +247,7 @@ namespace SGCFIEE.Controllers
                 context.TipoLaboratorio.Add(lab);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarLaboratorios");
         }
 
         [Authorize]
@@ -265,7 +265,7 @@ namespace SGCFIEE.Controllers
                 context.TipoPeriodo.Add(periodo);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarPeriodos");
         }
 
         [Authorize]
@@ -283,7 +283,7 @@ namespace SGCFIEE.Controllers
                 context.NombreTitulo.Add(titulo);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarTTitulo");
         }
 
         [Authorize]
@@ -301,7 +301,7 @@ namespace SGCFIEE.Controllers
                 context.GradoTitulo.Add(titulo);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarGTitulo");
         }
 
         [Authorize]
@@ -319,7 +319,7 @@ namespace SGCFIEE.Controllers
                 context.TipoDistincionTa.Add(distincion);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarDistincionesTA");
         }
 
         [Authorize]
@@ -337,7 +337,7 @@ namespace SGCFIEE.Controllers
                 context.TipoCertificacion.Add(certificado);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarCertificacion");
         }
 
         [Authorize]
@@ -355,7 +355,7 @@ namespace SGCFIEE.Controllers
                 context.InstitucionesEmpresas.Add(IE);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarInstiEmpre");
         }
 
         [Authorize]
@@ -373,7 +373,7 @@ namespace SGCFIEE.Controllers
                 context.Academias.Add(aca);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarAcademias");
         }
 
         [Authorize]
@@ -391,7 +391,7 @@ namespace SGCFIEE.Controllers
                 context.ProgramasTrasversales.Add(PT);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarProTransversales");
         }
 
         [Authorize]
@@ -409,7 +409,7 @@ namespace SGCFIEE.Controllers
                 context.TipoContratacionee.Add(ee);
                 context.SaveChanges();
             }
-            return RedirectToAction("VistaOpcionesCatalogos");
+            return RedirectToAction("MostrarTContratacion");
         }
 
         public IActionResult SeleccionarCarrera()
@@ -487,6 +487,150 @@ namespace SGCFIEE.Controllers
                 context.SaveChanges();
             }
             return RedirectToAction("MostrarMaterias");
+        }
+
+        public IActionResult EliminarAcademia(int id)
+        {
+            Academias aca;
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                aca = context.Academias.Where(s => s.IdAcademias == id).Single();
+                context.Academias.Remove(aca);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarAcademias");
+        }
+
+        public IActionResult EliminarCertificacion(int id)
+        {
+            TipoCertificacion tc;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                tc = context.TipoCertificacion.Where(s => s.IdCertificacion == id).Single();
+                context.TipoCertificacion.Remove(tc);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarCertificacion");
+        }
+
+        public IActionResult EliminarDistincion(int id)
+        {
+            TipoDistincionTa dis;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                dis = context.TipoDistincionTa.Where(s => s.IdDistincion == id).Single();
+                context.TipoDistincionTa.Remove(dis);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarDistincionesTA");
+        }
+
+        public IActionResult EliminarGTitulo(int id)
+        {
+            GradoTitulo gt;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                gt = context.GradoTitulo.Where(s => s.IdGradoTitulo == id).Single();
+                context.GradoTitulo.Remove(gt);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarGTitulo");
+        }
+
+        public IActionResult EliminarInstiEmp(int id)
+        {
+            InstitucionesEmpresas b;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                b = context.InstitucionesEmpresas.Where(s => s.IdIE == id).Single();
+                context.InstitucionesEmpresas.Remove(b);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarInstiEmpre");
+        }
+
+        public IActionResult EliminarLaboratorio(int id)
+        {
+            TipoLaboratorio tipoLab;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                tipoLab = context.TipoLaboratorio.Where(s => s.IdTipoLaboratorio == id).Single();
+                context.TipoLaboratorio.Remove(tipoLab);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarLaboratorios");
+        }
+
+        public IActionResult EliminarPeriodo(int id)
+        {
+            TipoPeriodo periodo;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                periodo = context.TipoPeriodo.Where(s => s.IdPeriodo == id).Single();
+                context.TipoPeriodo.Remove(periodo);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarPeriodos");
+        }
+
+        public IActionResult EliminarTPersonal(int id)
+        {
+            TipoPersonal personal;
+            using(sgcfieeContext context  = new sgcfieeContext())
+            {
+                personal = context.TipoPersonal.Where(s => s.IdTipoPersonal == id).Single();
+                context.TipoPersonal.Remove(personal);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarPersonal");
+        }
+
+        public IActionResult EliminarPTransversal(int id)
+        {
+            ProgramasTrasversales pt;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                pt = context.ProgramasTrasversales.Where(s => s.IdProgramasTrasversales == id).Single();
+                context.ProgramasTrasversales.Remove(pt);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarProTransversales");
+        }
+
+        public IActionResult EliminarTPuesto(int id)
+        {
+            TipoPuesto puesto;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                puesto = context.TipoPuesto.Where(s => s.IdPuesto == id).Single();
+                context.TipoPuesto.Remove(puesto);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarPuestos");
+        }
+
+        public IActionResult EliminarTContratacion(int id)
+        {
+            TipoContratacionee contratacionee;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                contratacionee = context.TipoContratacionee.Where(s => s.IdTipoContratacion == id).Single();
+                context.TipoContratacionee.Remove(contratacionee);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarTContratacion");
+        }
+
+        public IActionResult EliminarTTitulo(int id)
+        {
+            NombreTitulo nt;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                nt = context.NombreTitulo.Where(s => s.IdNombreTitulo == id).Single();
+                context.NombreTitulo.Remove(nt);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarTTitulo");
         }
     } 
 }

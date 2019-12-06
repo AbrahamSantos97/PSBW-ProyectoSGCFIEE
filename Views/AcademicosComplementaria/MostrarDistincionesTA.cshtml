@@ -33,7 +33,7 @@
                 <table class="table table-striped table-bordered table-hover table-checkable order-column" style="width: 100%" id="example1">
                     <thead>
                         <tr>
-                            <th class="center" ">Nombre del laboratorio</th>
+                            <th class="center">Nombre del laboratorio</th>
                             <th class="center">Acciones</th>
                         </tr>
                     </thead>
@@ -43,7 +43,7 @@
                             <tr class="odd gradeX">
                                 <td class="center">@Html.DisplayFor(modelItem => item.Nombre)</td>
                                 <td class="center">
-                                    <a asp-route-id="@item.IdDistincion" asp-controller="AcademicosComplementaria" asp-action="EliminarTPuesto" class="btn btn-danger btn-xs  deletepersonal" title="Eliminar">
+                                    <a asp-route-id="@item.IdDistincion" asp-controller="AcademicosComplementaria" asp-action="EliminarDistincion" class="btn btn-danger btn-xs" title="Eliminar">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>

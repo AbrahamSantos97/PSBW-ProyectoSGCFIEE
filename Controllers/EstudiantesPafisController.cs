@@ -15,7 +15,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            List<TablaPafi> tb_paficito = new List<TablaPafi>();
+            //List<TablaPafi> tb_paficito = new List<TablaPafi>();
             List<TablaPafi> tb_pafi = new List<TablaPafi>();
             List<TablaPafi> correcto = new List<TablaPafi>();
             TablaPafi aux = new TablaPafi();
@@ -23,37 +23,28 @@ namespace SGCFIEE.Controllers
             int idAlu = (int)HttpContext.Session.GetInt32("IdUsu");
             using (sgcfieeContext context = new sgcfieeContext())
             {
-                tb_paficito = (from d in context.TbPafisAlumno
-                           join
-                            p in context.PafisAcademicos on d.RInfopafi equals p.IdPafis
-                           join
-                           a in context.Academicos on p.IdAcademico equals a.IdAcademicos
-                           join
-                           s in context.TbSalones on p.IdSalon equals s.IdTbSalones
-                           select
-                           new TablaPafi
-                           {
-                               idPafi = p.IdPafis,
-                               NombrePafi = p.Nombre,
-                               Horario = p.Horario,
-                               NombreMaestro = a.Nombre,
-                               ApePaterno = a.ApellidoPaterno,
-                               ApeMaterno = a.ApellidoMaterno,
-                               ClvSalon = s.ClaveSalon,
-                               ocupado = 0,
-                               estado = p.Estado.Value
-                           }
-                          ).ToList();
-
+                tb_pafi = (from d in context.TbPafisAlumno
+                               join
+                                p in context.PafisAcademicos on d.RInfopafi equals p.IdPafis
+                               join
+                               a in context.Academicos on p.IdAcademico equals a.IdAcademicos
+                               join
+                               s in context.TbSalones on p.IdSalon equals s.IdTbSalones
+                               select
+                               new TablaPafi
+                               {
+                                   idPafi = p.IdPafis,
+                                   NombrePafi = p.Nombre,
+                                   Horario = p.Horario,
+                                   NombreMaestro = a.Nombre,
+                                   ApePaterno = a.ApellidoPaterno,
+                                   ApeMaterno = a.ApellidoMaterno,
+                                   ClvSalon = s.ClaveSalon,
+                                   ocupado = 0,
+                                   estado = p.Estado.Value
+                               }
+                          ).Where(s => s.estado == 0).ToList();
                 pafi_alum = context.TbPafisAlumno.Where(s => s.RAlumno.Equals(idAlu)).ToList();
-
-            }
-            foreach(TablaPafi z in tb_paficito)
-            {
-                if(z.estado == 0)
-                {
-                    tb_pafi.Add(z);
-                }
             }
             
             foreach(TablaPafi t in tb_pafi)
@@ -226,8 +217,9 @@ namespace SGCFIEE.Controllers
                 context.PafisAcademicos.Add(pafis);
                 context.SaveChanges();
                 TempData["Mensaje"] = "Datos registrados";
-                var x = context.PafisAcademicos.Count();
-                tbpafi.RInfopafi = x;
+                var x = context.PafisAcademicos.Last();
+                int idpafinuevo = x.IdPafis;
+                tbpafi.RInfopafi = idpafinuevo;
                 context.TbPafisAlumno.Add(tbpafi);
                 context.SaveChanges();
             }
@@ -290,6 +282,49 @@ namespace SGCFIEE.Controllers
                 }
             }
             return View(correcto);
+        }
+
+        public IActionResult Desenlistar(int id)
+        {
+            int alum = (int)HttpContext.Session.GetInt32("IdUsu");
+            TbPafisAlumno tbpafi = null;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                tbpafi = context.TbPafisAlumno.Where(s => s.RAlumno == alum && s.RInfopafi.Value == id).SingleOrDefault();
+                if(tbpafi != null)
+                {
+                    context.TbPafisAlumno.Remove(tbpafi);
+                    context.SaveChanges();
+                    int x = 0;
+                    x = context.TbPafisAlumno.Where(a => a.RInfopafi.Value == id).Count();
+                    if(x<1)
+                    {
+                        PafisAcademicos pafi = context.PafisAcademicos.Where(b => b.IdPafis == id).Single();
+                        context.PafisAcademicos.Remove(pafi);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Eliminar(int id)
+        {
+            PafisAcademicos pafi;
+            List<TbPafisAlumno> pafis = new List<TbPafisAlumno>();
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                pafis = context.TbPafisAlumno.Where(w => w.RInfopafi.Value == id).ToList();
+                foreach(TbPafisAlumno item in pafis)
+                {
+                    context.TbPafisAlumno.Remove(item);
+                    context.SaveChanges();
+                }
+                pafi = context.PafisAcademicos.Where(s => s.IdPafis == id).Single();
+                context.PafisAcademicos.Remove(pafi);
+                context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }
