@@ -51,11 +51,14 @@
                                 {
                                     <td class="center">Baja</td>
                                 }
-                                <td class="center">
-                                    <a asp-route-id="@item.IdAcademias" asp-controller="AcademicosComplementaria" asp-action="EliminarAcademia" class="btn btn-danger btn-xs  deletepersonal" title="Eliminar">
-                                        <i class="fa fa-trash-o"></i>
-                                    </a>
-                                </td>
+                            <td class="center">
+                                <a asp-route-id="@item.IdAcademias" asp-controller="AcademicosComplementaria" asp-action="EliminarAcademia" class="btn btn-danger btn-xs  deletepersonal" title="Eliminar">
+                                    <i class="fa fa-trash-o"></i>
+                                </a>
+                                <a asp-route-id="@item.IdAcademias" asp-controller="AcademicosComplementaria" asp-action="FormEditarAcademia" class="btn btn-primary btn-xs editar" title="Editar">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </td>
                             </tr>
                         }
                     </tbody>

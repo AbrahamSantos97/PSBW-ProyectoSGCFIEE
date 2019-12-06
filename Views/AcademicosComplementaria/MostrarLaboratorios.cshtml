@@ -33,7 +33,7 @@
                     <table class="table table-striped table-bordered table-hover table-checkable order-column" style="width: 100%" id="example1">
                         <thead>
                             <tr>
-                                <th class="center" ">Nombre del laboratorio</th>
+                                <th class="center">Nombre del laboratorio</th>
                                 <th class="center">Acciones</th>
                             </tr>
                         </thead>
@@ -46,7 +46,9 @@
                                         <a asp-route-id="@item.IdTipoLaboratorio" asp-controller="AcademicosComplementaria" asp-action="EliminarLaboratorio" class="btn btn-danger btn-xs  deletepersonal" title="Eliminar">
                                             <i class="fa fa-trash-o"></i>
                                         </a>
-
+                                        <a asp-route-id="@item.IdTipoLaboratorio" asp-controller="AcademicosComplementaria" asp-action="FormEditarLab" class="btn btn-primary btn-xs editar" title="Editar">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             }

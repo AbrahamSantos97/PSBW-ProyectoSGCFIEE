@@ -488,6 +488,7 @@ namespace SGCFIEE.Controllers
             }
             return RedirectToAction("MostrarMaterias");
         }
+        //Eliminar
 
         public IActionResult EliminarAcademia(int id)
         {
@@ -628,6 +629,269 @@ namespace SGCFIEE.Controllers
             {
                 nt = context.NombreTitulo.Where(s => s.IdNombreTitulo == id).Single();
                 context.NombreTitulo.Remove(nt);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarTTitulo");
+        }
+
+        public IActionResult FormEditarAcademia(int id)
+        {
+            Academias aca;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                aca = context.Academias.Where(s => s.IdAcademias == id).Single();
+            }
+            return View(aca);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarAcademia(Academias aca)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.Academias.Update(aca);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarAcademias");
+        }
+
+        public IActionResult FormEditarCertificacion(int id)
+        {
+            TipoCertificacion cert;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                cert = context.TipoCertificacion.Where(s => s.IdCertificacion == id).Single();
+            }
+            return View(cert);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarCertificacion(TipoCertificacion cert)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.TipoCertificacion.Update(cert);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarCertificacion");
+        }
+
+        public IActionResult FormEditarDistincion(int id)
+        {
+            TipoDistincionTa ta;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                ta = context.TipoDistincionTa.Where(s => s.IdDistincion == id).Single();
+            }
+            return View(ta);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarDistincion(TipoDistincionTa ta)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.TipoDistincionTa.Update(ta);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarDistincionesTA");
+        }
+
+        public IActionResult FormEditarGTitulo(int id)
+        {
+            GradoTitulo gt;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                gt = context.GradoTitulo.Where(s => s.IdGradoTitulo == id).Single();
+            }
+            return View(gt);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarGTitulo(GradoTitulo gt)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.GradoTitulo.Update(gt);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarGTitulo");
+        }
+
+        public IActionResult FormEditarIE(int id)
+        {
+            InstitucionesEmpresas ie;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                ie = context.InstitucionesEmpresas.Where(s => s.IdIE == id).Single();
+            }
+            return View(ie);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarIE(InstitucionesEmpresas ie)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.InstitucionesEmpresas.Update(ie);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarInstiEmpre");
+        }
+
+        public IActionResult FormEditarLab(int id)
+        {
+            TipoLaboratorio lab;
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                lab = context.TipoLaboratorio.Where(s => s.IdTipoLaboratorio == id).Single();
+            }
+            return View(lab);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarLab(TipoLaboratorio lab)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.TipoLaboratorio.Update(lab);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarLaboratorios");
+        }
+
+        public IActionResult FormEditarPeriodo(int id)
+        {
+            TipoPeriodo per;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                per = context.TipoPeriodo.Where(s => s.IdPeriodo == id).Single();
+            }
+            return View(per);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarPeriodo(TipoPeriodo per)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.TipoPeriodo.Update(per);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarPeriodos");
+        }
+
+        public IActionResult FormEditarTPersonal(int id)
+        {
+            TipoPersonal per;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                per = context.TipoPersonal.Where(s => s.IdTipoPersonal == id).Single();
+            }
+            return View(per);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarPersonal(TipoPersonal per)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.TipoPersonal.Update(per);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarPersonal");
+        }
+
+        public IActionResult FormEditarProTra(int id)
+        {
+            ProgramasTrasversales pro;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                pro = context.ProgramasTrasversales.Where(s => s.IdProgramasTrasversales == id).Single();
+            }
+            return View(pro);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarProTra(ProgramasTrasversales pt)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.ProgramasTrasversales.Update(pt);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarProTransversales");
+        }
+
+        public IActionResult FormEditarPuesto(int id)
+        {
+            TipoPuesto puesto;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                puesto = context.TipoPuesto.Where(s => s.IdPuesto == id).Single();
+            }
+            return View(puesto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarPuesto(TipoPuesto puesto)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.TipoPuesto.Update(puesto);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarPuestos");
+        }
+
+        public IActionResult FormEditarTContratacion(int id)
+        {
+            TipoContratacionee cont;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                cont = context.TipoContratacionee.Where(s => s.IdTipoContratacion == id).Single();
+            }
+            return View(cont);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarTContratacion(TipoContratacionee ee)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.TipoContratacionee.Update(ee);
+                context.SaveChanges();
+            }
+            return RedirectToAction("MostrarTContratacion");
+        }
+
+        public IActionResult FormEditarNomTitulo(int id)
+        {
+            NombreTitulo tit;
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                tit = context.NombreTitulo.Where(s => s.IdNombreTitulo == id).Single();
+            }
+            return View(tit);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarNomTitulo(NombreTitulo tit)
+        {
+            using(sgcfieeContext context = new sgcfieeContext())
+            {
+                context.NombreTitulo.Update(tit);
                 context.SaveChanges();
             }
             return RedirectToAction("MostrarTTitulo");

@@ -13,6 +13,7 @@ namespace SGCFIEE.Models
         public int IdMapaCurricular { get; set; }
         public int? IdExperienciaEducativa { get; set; }
         public int? IdProgramaEducativo { get; set; }
+        public int? Estado { get; set; }
 
         public virtual ExperienciaEducativa IdExperienciaEducativaNavigation { get; set; }
         public virtual ProgramaEducativo IdProgramaEducativoNavigation { get; set; }

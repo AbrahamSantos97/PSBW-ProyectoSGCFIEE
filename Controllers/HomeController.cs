@@ -8,6 +8,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using SGCFIEE.Models;
 using Microsoft.AspNetCore.Authentication;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SGCFIEE.Controllers
 {
@@ -24,9 +26,15 @@ namespace SGCFIEE.Controllers
         {
             var x = 2;
             Usuarios usu = new Usuarios();
+            String pass = string.Concat(user.matricula,user.password);
+            SHA1 sha1 = new SHA1CryptoServiceProvider();
+            byte[] input = (new UnicodeEncoding()).GetBytes(pass);
+            byte[] hash = sha1.ComputeHash(input);
+            string passwo = Convert.ToBase64String(hash);
+            user.password = passwo;
             using(sgcfieeContext context = new sgcfieeContext())
             {
-                usu = context.Usuarios.Where(e => e.Nombre.Equals(user.matricula)).Single();
+                usu = context.Usuarios.Where(e => e.Nombre.Equals(user.matricula) && e.Contrasenia.Equals(user.password)).SingleOrDefault();
                 if (usu.Nombre.Equals(user.matricula) && usu.Contrasenia.Equals(user.password))
                 {
                     x = 1;

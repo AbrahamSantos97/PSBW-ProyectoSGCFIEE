@@ -314,3 +314,15 @@ C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\net
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\InsertarTContratacion.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\SeleccionarCarrera.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\MostrarMaterias.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarAcademia.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarCertificacion.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarDistincion.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarGTitulo.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarIE.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarLab.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarPeriodo.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarTPersonal.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarProTra.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarPuesto.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarTContratacion.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarNomTitulo.g.cshtml.cs

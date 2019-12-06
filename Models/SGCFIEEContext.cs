@@ -1986,6 +1986,8 @@ namespace SGCFIEE.Models
                     .HasColumnName("idMapa_Curricular")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Estado).HasColumnType("int(11)");
+
                 entity.Property(e => e.IdExperienciaEducativa)
                     .HasColumnName("idExperienciaEducativa")
                     .HasColumnType("int(11)");
