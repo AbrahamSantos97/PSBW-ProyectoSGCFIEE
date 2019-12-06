@@ -1,4 +1,4 @@
-﻿@model SGCFIEE.Models.MapaCurricular;
+﻿@model SGCFIEE.Models.ProgramaEducativo;
 @{
     Layout = "~/Views/Home/Principal.cshtml";
     var x = (IEnumerable<SGCFIEE.Models.ProgramaEducativo>)ViewData["carreras"];
@@ -33,7 +33,6 @@
                                                 <div class="col-md-3 col-sm-3">
                                                     <label asp-for="IdProgramaEducativo">Elija la carrera</label>
                                                     <select asp-for="IdProgramaEducativo" id="tipo" class="form-control">
-                                                        <option value="0">Seleccionar...</option>
                                                         @foreach (var item in x)
                                                         {
                                                             <option value="@item.IdProgramaEducativo">@Html.DisplayFor(itemView => item.Nombre)</option>
@@ -64,10 +63,7 @@
                                                     <td class="center">@Html.DisplayFor(modelItem => item.area)</td>
                                                     <td class="center">@Html.DisplayFor(modelItem => item.creditos)</td>
                                                     <td class="center">
-                                                        <a asp-route-id="@item.idMapa" asp-controller="EstudiantesPafis" asp-action="FormEditar" class="btn btn-primary btn-xs editar" title="Editar">
-                                                            <i class="fa fa-pencil"></i>
-                                                        </a>
-                                                        <a asp-route-id="@item.idMapa" asp-action="Eliminar" class="btn btn-danger btn-xs eliminar" title="Eliminar">
+                                                        <a asp-route-id="@item.idMapa" asp-action="EliminarMC" class="btn btn-danger btn-xs eliminar" title="Eliminar">
                                                             <i class="fa fa-trash-o "></i>
                                                         </a>
 

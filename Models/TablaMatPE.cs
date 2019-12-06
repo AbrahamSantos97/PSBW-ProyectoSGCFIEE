@@ -13,5 +13,6 @@ namespace SGCFIEE.Models
         public String area { get; set; }
         public int creditos { get; set; }
         public int idEE { get; set; }
+        public int estado { get; set; }
     }
 }

@@ -161,19 +161,22 @@ namespace SGCFIEE.Controllers
         }
 
         [Authorize]
-        public IActionResult TablaMatPE(MapaCurricular map)
+        public IActionResult TablaMatPE(ProgramaEducativo map)
         {
-            int x = map.IdProgramaEducativo.Value;
+            int x = map.IdProgramaEducativo;
             List<TablaMatPE> mapa = new List<TablaMatPE>();
             if(x == 0)
             {
-                return RedirectToAction("VCarreras");
+                x = (int)HttpContext.Session.GetInt32("programaE");
+                //return RedirectToAction("VCarreras");
             }
             else
             {
-                using (sgcfieeContext context = new sgcfieeContext())
-                {
-                    mapa = (from m in context.MapaCurricular
+                HttpContext.Session.SetInt32("programaE", x);
+            }
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                mapa = (from m in context.MapaCurricular
                             join ee in context.ExperienciaEducativa on m.IdExperienciaEducativa equals ee.IdExperienciaEducativa
                             join ar in context.AreaExperienciaEducativa on ee.IdArea equals ar.IdAreaExperienciaEducativa
                             join pe in context.ProgramaEducativo on m.IdProgramaEducativo equals pe.IdProgramaEducativo
@@ -184,15 +187,32 @@ namespace SGCFIEE.Controllers
                                 nomMat = ee.Nombre,
                                 creditos = ee.Creditos.Value,
                                 idPE = pe.IdProgramaEducativo,
-                                area = ar.Nombre
+                                area = ar.Nombre,
+                                estado = m.Estado.Value
                             }
-                            ).Where(s => s.idPE == x).ToList();
+                            ).Where(s => s.idPE == x && s.estado== 1).ToList();
                     var carreras = context.ProgramaEducativo.ToList();
                     ViewData["carreras"] = carreras;
                 }
                 ViewData["mapa"] = mapa;
-                return View();
+            
+            return View();
+        }
+
+        public IActionResult EliminarMC(int id)
+        {
+            MapaCurricular mc;
+            //mc.Estado = 0;
+            //mc.IdExperienciaEducativa = id;
+            //int x = (int)HttpContext.Session.GetInt32("programaE");
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                mc = context.MapaCurricular.Where(s => s.IdMapaCurricular == id).Single();
+                mc.Estado = 0;
+                context.MapaCurricular.Update(mc);
+                context.SaveChanges();
             }
+            return RedirectToAction("TablaMatPE");
         }
 
         //Empiezan los insertar
@@ -446,8 +466,9 @@ namespace SGCFIEE.Controllers
                            idEE = e.IdExperienciaEducativa,
                            idPE = m.IdProgramaEducativo.Value,
                            nomMat = e.Nombre,
-                           creditos = e.Creditos.Value
-                       }).Where(s => s.idPE == proe).ToList();
+                           creditos = e.Creditos.Value,
+                           estado = m.Estado.Value
+                       }).Where(s => s.idPE == proe && s.estado == 1).ToList();
 
                 var x = context.ProgramaEducativo.ToList();
                 ViewData["carreras"] = x;
@@ -481,6 +502,7 @@ namespace SGCFIEE.Controllers
             mc.IdExperienciaEducativa = id;
             int pe = (int)HttpContext.Session.GetInt32("programaE");
             mc.IdProgramaEducativo = pe;
+            mc.Estado = 1;
             using (sgcfieeContext context = new sgcfieeContext())
             {
                 context.MapaCurricular.Add(mc);
