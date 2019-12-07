@@ -20,6 +20,7 @@ namespace SGCFIEE.Controllers
                 var movilidades = context.CtMovilidades.Where(s => s.TipoMovilidades.Equals(movi.TipoMovilidades)).ToList();
                 ViewData["Movilidades"] = movilidades;
             }
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             return View();
         }
 
@@ -27,6 +28,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult EleccionMovilidades()
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             return View();
         }
         
@@ -35,6 +37,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult Editar(int id)
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             CtMovilidades datosMovi;
             using(sgcfieeContext context = new sgcfieeContext())
             {
@@ -65,7 +68,8 @@ namespace SGCFIEE.Controllers
 
         public IActionResult FormInscribir(int id)
         {
-            using(sgcfieeContext context = new sgcfieeContext())
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            using (sgcfieeContext context = new sgcfieeContext())
             {
                 var y = context.ProgramaEducativo.ToList();
                 ViewData["clv"] = id;
@@ -77,6 +81,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult MostrarListaAlumnos(FormInscribirMovilidad movi)
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             int x = movi.idMovilidad;
             int progra = movi.idAlumno;
             List<TablaAlumno> tb = new List<TablaAlumno>();
@@ -123,6 +128,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult MostrarInformacionInscripcion(FormInscribirMovilidad movi)
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             int movilidad = movi.idMovilidad;
             int alumno = movi.idAlumno;
             DatosPersonales dp;
@@ -154,9 +160,49 @@ namespace SGCFIEE.Controllers
             TbMovilidad tb = new TbMovilidad();
             tb.RAlumno = formovi.idAlumno;
             tb.RMovilidad = formovi.idMovilidad;
-            tb.RPeriodo = 5;
-            using(sgcfieeContext context = new sgcfieeContext())
+            DateTime fech = DateTime.Today.Date;
+            int mes, ano;
+            mes = fech.Month;
+            ano = fech.Year;
+            List<TipoPeriodo> tp = new List<TipoPeriodo>();
+            int idPa = 0;
+            using (sgcfieeContext context = new sgcfieeContext())
             {
+                tp = context.TipoPeriodo.ToList();
+                foreach (TipoPeriodo periodo in tp)
+                {
+                    int mes2, ano2;
+                    DateTime dt = periodo.FechaInicio.Value;
+                    mes2 = dt.Month;
+                    ano2 = dt.Year;
+                    if (mes2 <= mes && ano2 <= ano)
+                    {
+                        DateTime dt2 = periodo.FechaFin.Value;
+                        mes2 = dt2.Month;
+                        ano2 = dt2.Year;
+                        if (ano2 == ano)
+                        {
+                            if (mes2 >= mes)
+                            {
+                                idPa = periodo.IdPeriodo;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (ano2 > ano)
+                            {
+                                idPa = periodo.IdPeriodo;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (idPa == 0)
+                {
+                    return RedirectToAction("Index");
+                }
+                tb.RPeriodo = idPa;
                 context.TbMovilidad.Add(tb);
                 context.SaveChanges();
             }
@@ -166,6 +212,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult ConsultarEstatus()
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             List<Calificaciones_Alumno_Movilidad> cam;
             int idAlumno = (int)HttpContext.Session.GetInt32("IdUsu");
             //int idAlumno = 1;

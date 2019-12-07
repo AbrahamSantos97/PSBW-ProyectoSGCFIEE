@@ -69,6 +69,7 @@ namespace SGCFIEE.Controllers
 
         public IActionResult Default()
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             return View();
         }
 

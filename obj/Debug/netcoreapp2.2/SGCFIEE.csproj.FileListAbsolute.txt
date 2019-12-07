@@ -326,3 +326,9 @@ C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\net
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarPuesto.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarTContratacion.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\AcademicosComplementaria\FormEditarNomTitulo.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesBuzon\CrearProblema.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesExamen\Index.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesInformacion\CrearCali.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesBuzon\SeleccionarQueja.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesBuzon\TablaInfrestructura.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesBuzon\TablaAcademicos.g.cshtml.cs

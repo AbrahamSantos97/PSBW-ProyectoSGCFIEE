@@ -15,6 +15,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             //List<TablaPafi> tb_paficito = new List<TablaPafi>();
             List<TablaPafi> tb_pafi = new List<TablaPafi>();
             List<TablaPafi> correcto = new List<TablaPafi>();
@@ -115,6 +116,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult FormEditar(int id)
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             PafisAcademicos pafi;
             using(sgcfieeContext context = new sgcfieeContext())
             {
@@ -150,7 +152,8 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult SolicitudPafi()
         {
-             using(sgcfieeContext context = new sgcfieeContext())
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            using (sgcfieeContext context = new sgcfieeContext())
             {
                 var x = context.Academicos.ToList();
                 var y = context.TbSalones.ToList();
@@ -248,6 +251,7 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult DetallesPafi(int id)
         {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             List<InformacionPafiCompleta> tb_pafi = new List<InformacionPafiCompleta>();
             using(sgcfieeContext context = new sgcfieeContext())
             {

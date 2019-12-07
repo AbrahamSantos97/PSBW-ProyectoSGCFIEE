@@ -15,7 +15,8 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            using(sgcfieeContext context = new sgcfieeContext())
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            using (sgcfieeContext context = new sgcfieeContext())
             {
                 var x = context.TipoEventos.ToList();
                 ViewData["tipos"] = x;
@@ -30,7 +31,8 @@ namespace SGCFIEE.Controllers
         [Authorize]
         public IActionResult ListaEventos(int idTipoEvento)
         {
-            using(sgcfieeContext context = new sgcfieeContext())
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            using (sgcfieeContext context = new sgcfieeContext())
             {
                 var eventosEspecificos = context.TbEventos.Where(s => s.RTioEvento.Equals(idTipoEvento)).ToList<TbEventos>();
                 ViewData["NomEventos"] = eventosEspecificos;
@@ -47,6 +49,7 @@ namespace SGCFIEE.Controllers
             }
             else
             {
+                ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
                 using (sgcfieeContext context = new sgcfieeContext())
                 {
                     var categorias = context.TipoEventos.ToList();
@@ -55,13 +58,13 @@ namespace SGCFIEE.Controllers
                     ViewData["Eventos"] = evento;
                 }
             }
-            
             return View();
         }
         [Authorize]
         public IActionResult FormEvento(int id)
         {
-            using(sgcfieeContext context = new sgcfieeContext())
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            using (sgcfieeContext context = new sgcfieeContext())
             {
                 var evento = context.TbEventos.Where(s => s.IdEventos.Equals(id)).Single();
                 ViewData["evento"] = evento;

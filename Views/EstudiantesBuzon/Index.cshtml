@@ -1,8 +1,12 @@
-﻿@{
+﻿@model SGCFIEE.Models.BuzonSugerencias
+@using SGCFIEE.Models
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Home/Principal.cshtml";
-    var x = (IEnumerable <CtProblemas>)ViewData["Problemas"];
-    //var y = (IEnumerable <Academicos>)ViewData["Academicos"];
+    var y = (IEnumerable<CtProblemas>)ViewData["problema"];
+    var x = (IEnumerable<TipoPeriodo>)ViewData["periodo"];
+    var z = (IEnumerable<Academicos>)ViewData["academico"];
+
 }
 
 <!DOCTYPE html>
@@ -31,40 +35,47 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane fontawesome-demo active show" id="tab1">
+
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
 
                                     <div class="card-body " id="bar-parent2">
-                                        <!-- text input -->
-                                        <form>
-
+                                        <form asp-action="CrearSugerencia" asp-antiforgery="true">
                                             <div class="form-group">
                                                 <div class="col-md-3 col-sm-3">
                                                     <header>Infraestructura</header> <br>
-                                                    <label>Seleccione un tema</label>
-                                                    <select class="form-control" required id="selectInf">
-                                                        <option value="">Seleccionar...</option>
-                                                        @foreach(var item in x)
+                                                    <label>Seleccione un problema</label>
+                                                    <select asp-for="RProblema" class="form-control" id="areaexp">
+                                                        @foreach (var item in y)
                                                         {
-                                                            <option value=@item.IdCtProblemas>@Html.DisplayFor(modelItem => item.NombreProblemas)</option>
+                                                            <option value="@item.IdCtProblemas">@Html.DisplayFor(modelItem => item.NombreProblemas) </option>
+                                                        }
+                                                    </select> <br />
+                                                    <label>Seleccione periodo actual</label>
+                                                    <select asp-for="RPeriodo" class="form-control" id="areaexp">
+                                                        @foreach (var item in x)
+                                                        {
+                                                            <option value="@item.IdPeriodo">@Html.DisplayFor(modelItem => item.Nombre) </option>
                                                         }
                                                     </select>
                                                 </div> <br> <br>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <label>Describa la situacion a continuación</label>
-                                                    <textarea class="form-control" rows="3" placeholder="Escriba ..." required id="situacionInf"></textarea> <br> <br>
-                                                    <label>Agregue una sugerencia</label>
-                                                    <textarea class="form-control" rows="3" placeholder="Escriba ..." required id="sugerenciaInf"></textarea>
+                                                    <label asp-for="Propuesta">Describa la situacion a continuación</label>
+                                                    <textarea asp-for="Propuesta" class="form-control" rows="3" placeholder="Escriba ..." required id="situacionInf"></textarea> <br> <br>
+                                                    <label asp-for="Sugerencia">Agregue una sugerencia</label>
+                                                    <textarea asp-for="Sugerencia" class="form-control" rows="3" placeholder="Escriba ..." required id="sugerenciaInf"></textarea>
                                                 </div>
                                             </div>
+                                            <input id="" type="submit" value="Guardar" class="btn btn-success btn-sm m-b-10">
                                         </form>
-                                        <button id="btnInf" class="btn btn-success btn-sm m-b-10">
-                                            Enviar
-                                        </button>
                                     </div>
-
+                                    <label>*Agrega un problema si el campo esta vacio ejemplo: equipo, muebles, etc.</label> <br /> <br />
+                                    <a asp-controller="EstudiantesBuzon" asp-action="CrearProblema" class="btn btn-success btn-sm m-b-10">
+                                        Agregar Problema
+                                    </a>
                                 </div>
                             </div>
+
                         </div>
                         <div class="tab-pane" id="tab2">
                             <div class="row">
@@ -72,35 +83,38 @@
 
                                     <div class="card-body " id="bar-parent2">
                                         <!-- text input -->
-                                        <form>
+                                        <form asp-action="CrearSugerenciaAca" asp-antiforgery="true">
                                             <div class="form-group">
                                                 <div class="col-md-3 col-sm-3">
                                                     <header>Desempeño académico</header> <br>
                                                     <label>Seleccione un academico</label>
-                                                    <select class="form-control" id="selectDes">
-                                                        <option value="">Seleccionar...</option>
+                                                    <select asp-for="RAcademicos" class="form-control" id="areaexp">
+                                                        @foreach (var item in z)
+                                                        {
+                                                            <option value="@item.IdAcademicos">@Html.DisplayFor(modelItem => item.Nombre) </option>
+                                                        }
+                                                    </select> <br />
+                                                    <label>Seleccione periodo actual</label>
+                                                    <select asp-for="RPeriodo" class="form-control" id="areaexp">
                                                         @foreach (var item in x)
                                                         {
-                                                            <option value=@item.IdCtProblemas>@Html.DisplayFor(modelItem => item.NombreProblemas)</option>
+                                                            <option value="@item.IdPeriodo">@Html.DisplayFor(modelItem => item.Nombre) </option>
                                                         }
                                                     </select>
                                                 </div><br> <br>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <label>Describa la situacion a continuación</label>
-                                                    <textarea class="form-control" rows="3" placeholder="Escriba ..." id="situacionDes"></textarea> <br> <br>
-                                                    <label>Agregue una sugerencia </label>
-                                                    <textarea class="form-control" rows="3" placeholder="Escriba ..." id="sugerenciaDes"></textarea>
+                                                    <label asp-for="Propuesta">Describa la situacion a continuación</label>
+                                                    <textarea asp-for="Propuesta" class="form-control" rows="3" placeholder="Escriba ..." id="situacionDes"></textarea> <br> <br>
+                                                    <label asp-for="Sugerencia">Agregue una sugerencia </label>
+                                                    <textarea asp-for="Sugerencia" class="form-control" rows="3" placeholder="Escriba ..." id="sugerenciaDes"></textarea>
                                                 </div>
                                             </div>
+                                            <input id="" type="submit" value="Guardar" class="btn btn-success btn-sm m-b-10">
                                         </form>
-                                        <button id="btnDesem" class="btn btn-success btn-sm m-b-10">
-                                            Enviar
-                                        </button>
                                     </div>
 
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

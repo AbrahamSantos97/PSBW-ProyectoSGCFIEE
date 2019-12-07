@@ -2,6 +2,14 @@
 @{
     ViewData["Title"] = "Detalles";
     Layout = "~/Views/Home/Principal.cshtml";
+    var y = (IEnumerable<TipoPeriodo>)ViewData["periodo"];
+    var z = (IEnumerable< TipoEventos>)ViewData["tipoevento"];
+    var cali = (IEnumerable<CalificacionAlumno>)ViewData["calificacion"];
+    var evento = (IEnumerable<AlumnoEvento>)ViewData["evento"];
+    var movilidad = (IEnumerable<AlumnoMovilidad>)ViewData["movilidad"];
+    var pafi = (IEnumerable<AlumnoPafi>)ViewData["pafi"];
+    var examen = (IEnumerable<AlumnoExamen>)ViewData["examen"];
+
 }
 
 <!DOCTYPE html>
@@ -26,7 +34,7 @@
                     </div>
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane fontawesome-demo active show" id="tab1">
+                        <div class="tab-pane fontawesome-demo active show" id="reporte">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
 
@@ -145,35 +153,38 @@
                                     <div class="col-md-12 col-sm-12">
 
                                         <div class="card-body " id="bar-parent2">
-                                            <input id="agregacalialum" type="button" value="Agregar calificación" class="btn btn-success btn-sm m-b-10">
+                                            <a href="/EstudiantesInformacion/CrearCali?idalum=@Model.IdDatosPersonales" class="btn btn-success btn-sm m-b-10"> 
+                                                Agregar Calificacion 
+                                            </a>
                                             <div class="col-md-3 col-sm-3">
                                                 <label>Seleccione un periodo</label>
-                                                <select class="form-control" id="periodo">
-                                                    <option value="0">seleccione</option>
-                                                    
-                                                        <option value="">Opcion 1</option>
-                                                   
-
-
+                                                <select id="selectPeriodo" class="form-control">
+                                                    @foreach (var item in y)
+                                                    {
+                                                        <option value="@item.IdPeriodo">@Html.DisplayFor(modelItem => item.Nombre) </option>
+                                                    }
                                                 </select> <br /> <br />
                                             </div>
                                             <div class="row">
-                                                
-                                                    <div class="col-sm-4">
-                                                        <div class="panel">
-                                                            <header class="panel-heading panel-heading-blue">
-                                                                Nombre materia
-                                                            </header>
-                                                            <div class="panel-body" style="background-color:#4CB36E;">
-                                                                <p style="color: white;" id="">NRC:        NRC</p>
-                                                                <p style="color:white;">Academico:         ACADEMICO  </p>
-                                                                <p style="color:white;">Calificacion:      CALIFICACION</p>
-                                                                <p style="color:white;">Tipo calificacion: TIPOCALIFIACION</p>
-                                                                <p style="color:white;">Creditos:          CREDITOS</p>
-                                                            </div>
+                                                @foreach (var item in cali)
+                                                {
+                                                <div class="col-sm-4" name="calificacion-@item.IdPeriodo" >
+                                                    <div class="panel">
+                                                        <header class="panel-heading panel-heading-blue">
+                                                            @Html.DisplayFor(modelItem => item.Nombreexpe)
+                                                        </header>
+                                                        <div class="panel-body" style="background-color:#4CB36E;">
+                                                            <p style="color: white;" id="">NRC:        @Html.DisplayFor(modelItem => item.Nrc)</p>
+                                                            <p style="color:white;">Academico:         @Html.DisplayFor(modelItem => item.Nombreaca)  </p>
+                                                            <p style="color:white;">Calificacion:      @Html.DisplayFor(modelItem => item.Calificacion)</p>
+                                                            <p style="color:white;">Tipo calificacion: @Html.DisplayFor(modelItem => item.tipocali)</p>
+                                                            <p style="color:white;">Creditos:          @Html.DisplayFor(modelItem => item.creditos)</p>
                                                         </div>
                                                     </div>
-                                               
+                                                </div>
+                                                }
+                                                
+
                                             </div>
                                         </div>
 
@@ -182,18 +193,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab4">
+                        <div class="tab-pane" id="tab4" >
                             <div id="pafialumno">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
                                         <div class="col-md-3 col-sm-3">
                                             <label>Seleccione un periodo</label>
-                                            <select class="form-control" id="periodopafi">
-                                                <option value="0">seleccione</option>
-
-                                                <option value="">Opcion 1</option>
-                                                <option value="">Opcion 2</option>
-
+                                            <select id="PeriodoPafi" class="form-control">
+                                                @foreach (var item in y)
+                                                {
+                                                    <option value="@item.IdPeriodo">@Html.DisplayFor(modelItem => item.Nombre) </option>
+                                                }
                                             </select> <br /> <br />
                                         </div>
                                         <div class="card-body">
@@ -209,16 +219,16 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr class="odd gradeX">
-
-                                                        <td style="display:none">id</td>
-                                                        <td>Programacion</td>
-                                                        <td>Ceron</td>
-                                                        <td>13:00-15:00</td>
-                                                        <td>F-11</td>
-
-                                                    </tr>
-
+                                                    @foreach (var item in pafi)
+                                                    {
+                                                        <tr class="odd gradeX" name="pafi-@item.idperiodo">
+                                                            <td style="display:none">id</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.nombrepafi)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.acapafi)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.horario)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.salon)</td>
+                                                        </tr>
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -232,43 +242,48 @@
 
                                     <div class="card-body " id="bar-parent2">
                                         <div class="card-head">
-                                            <header>Examen ingreso</header>
+                                            <header>Examen Ingreso</header>
                                         </div> <br>
                                         <div class="row">
-                                            <div class="col-md-6 col-6 b-r">
-                                                <strong>Comprensión Lectora</strong>
-                                                <p id="Comprension" class="text-muted">10</p>
-                                                <br> <br>
-                                            </div>
-                                            <div class="col-md-6 col-6 b-r">
-                                                <strong>Estructura de la lengua</strong>
-                                                <p id="Estructura" class="text-muted">10</p>
-                                                <br> <br>
-                                            </div>
-                                            <div class="col-md-6 col-6 b-r">
-                                                <strong>Pensamiento analítico</strong>
-                                                <p id="Pensamientoa" class="text-muted">10</p>
-                                                <br>
-                                            </div>
-                                            <div class="col-md-6 col-6 b-r">
-                                                <strong>Pensamiento matemático</strong>
-                                                <p id="Pensamientom" class="text-muted">10</p>
-                                                <br>
-                                            </div>
-                                        </div> <br> <br>
+                                            @foreach (var item in examen)
+                                            {
+                                                @if (item.tipoexa == 1)
+                                                {
+
+
+                                                    <div class="col-md-6 col-6 b-r">
+                                                        <strong>@Html.DisplayFor(modelItem => item.rubroexamen)</strong>
+                                                        <p id="Comprension" class="text-muted">@Html.DisplayFor(modelItem => item.calificacion)</p>
+                                                        <br> <br>
+                                                    </div>
+
+                                                }
+
+                                            }
+                                        </div><br> <br>
                                         <div class="card-head">
                                             <header>Examen interno</header>
                                         </div> <br>
-                                        <div class="row">
-                                            <div class="col-md-6 col-6 b-r">
-                                                <strong>Matemáticas</strong>
-                                                <p id="Pensamientom" class="text-muted">10</p>
-                                                <br>
-                                            </div>
-                                        </div>
-                                    </div>
+                                               <div class="row">
+                                                   @foreach (var item2 in examen)
+                                                   {
+                                                       @if (item2.tipoexa == 2)
+                                                       {
 
-                                </div>
+
+                                                           <div class="col-md-6 col-6 b-r">
+                                                               <strong>@Html.DisplayFor(modelItem => item2.rubroexamen)</strong>
+                                                               <p id="Pensamientom" class="text-muted">@Html.DisplayFor(modelItem => item2.calificacion)</p>
+                                                               <br>
+                                                           </div>
+
+                                                       }
+                                                   }
+                                               </div>
+
+                                        </div>
+
+                                        </div>
                             </div>
                         </div>
 
@@ -278,22 +293,14 @@
                                     <div class="card-body " id="bar-parent2">
                                         <br> <br>
                                         <div class="row">
-
+                                            @foreach (var item in evento)
+                                            {
                                             <div class="col-md-3 col-6 b-r">
-                                                <strong>Evento cultural</strong> <br> <br>
-                                                <p id="" class="text-muted">Danza</p> <br>
-                                                <p id="" class="text-muted">01/01/2016</p> <br>
+                                                <strong>@Html.DisplayFor(modelItem => item.tipoeve)</strong> <br> <br>
+                                                <p id="" class="text-muted">@Html.DisplayFor(modelItem => item.nombreeve)</p> <br>
+                                                <p id="" class="text-muted">@Html.DisplayFor(modelItem => item.fecha)</p> <br>
                                             </div>
-                                            <div class="col-md-3 col-6 b-r">
-                                                <strong>Evento Deportivo</strong> <br> <br>
-                                                <p id="" class="text-muted">Interfacultades</p> <br>
-                                                <p id="" class="text-muted">01/01/2016</p> <br></c:if>
-                                            </div>
-                                            <div class="col-md-3 col-6 b-r">
-                                                <strong>Evento transversal</strong> <br> <br>
-                                                <p id="" class="text-muted">Reciclon</p> <br>
-                                                <p id="" class="text-muted">01/01/2018 </p> <br>
-                                            </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -308,25 +315,28 @@
                                             <div class="col-md-3 col-sm-3">
 
                                                 <label>Seleccione un periodo</label>
-                                                <select class="form-control" id="periodomovi">
-                                                    <option value="0">seleccione</option>
-                                                    
-                                                        <option value="">Periodo</option>
-                                                   
+                                                <select id="PeriodoMovi" class="form-control">
+                                                    @foreach (var item in y)
+                                                    {
+                                                        <option value="@item.IdPeriodo">@Html.DisplayFor(modelItem => item.Nombre) </option>
+                                                    }
                                                 </select>
                                             </div> <br> <br>
-                                            <div class="row">
-                                                
-                                                    <div class="col-md-6 col-6 b-r">
-                                                        <strong>Información</strong> <br> <br>
-                                                        <p id="Matematicas" class="text-muted">Tipo movilidad: Naciona o Internacionall</p>
-                                                        <p id="" class="text-muted">Pais destino: </p>
-                                                        <p id="" class="text-muted">Entidad destino:  </p>
-                                                        <p id="" class="text-muted">Escuela destino:  </p>
-                                                        <p id="" class="text-muted">TIempo permanencia:  </p>
-                                                    </div>
-                                                
-                                            </div>
+                                                        <div class="row">
+                                                            @foreach (var item in movilidad)
+                                                            {
+                                                                <div class="col-md-6 col-6 b-r" name="movilidad-@item.idperiodo">
+                                                                    <strong>Información</strong> <br> <br>
+                                                                    <p class="text-muted">Tipo movilidad: Naciona o Internacionall</p>
+                                                                    <p id="" class="text-muted">Pais destino:   @Html.DisplayFor(modelItem => item.paisdestino) </p>
+                                                                    <p id="" class="text-muted">Entidad destino:    @Html.DisplayFor(modelItem => item.entidaddestino)</p>
+                                                                    <p id="" class="text-muted">Escuela destino:    @Html.DisplayFor(modelItem => item.escueladestino)</p>
+                                                                    <p id="" class="text-muted">TIempo permanencia: @Html.DisplayFor(modelItem => item.tiempoperma)</p>
+                                                                </div>
+                                                            }
+
+
+                                                        </div>
                                         </div>
 
                                     </div>
@@ -354,6 +364,11 @@
                                 Regresar a tabla
                             </a>
                            
+                        </div>
+                        <div class="profile-content">
+                            <a id="tablaPDF" class="btn btn-danger btn-xs eliminar" title="Reporte">
+                                <i class="fa fa-trash-o "></i>
+                            </a>
                         </div>
                     </div>
                 </div>

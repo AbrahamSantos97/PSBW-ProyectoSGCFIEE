@@ -8,7 +8,7 @@
 
 <html>
 <div class="row">
-    <div class="col-md-12">
+    <div id="Reporte" class="col-md-12">
         <div class="card card-topline-green">
             <div class="card-head">
                 <header>INFORMACIÓN</header>
@@ -18,7 +18,7 @@
                     <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
                 </div>
             </div>
-            <div class="card-body ">
+            <div class="card-body " id="tablap">
                 <div class="row p-b-20">
                     <div class="col-md-12 col-sm-12 col-12">
                         <div class="btn-group">
@@ -61,7 +61,7 @@
                                     <a asp-route-id="@item.id" asp-controller="EstudiantesInformacion" asp-action="Editar" class="btn btn-primary btn-xs editar" title="Editar">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a asp-route-id="@item.id" asp-action="Eliminar" class="btn btn-danger btn-xs eliminar" title="Eliminar">
+                                    <a asp-route-id="@item.id" asp-controller="EstudiantesInformacion" asp-action="Eliminar" class="btn btn-danger btn-xs eliminar" title="Eliminar">
                                         <i class="fa fa-trash-o "></i>
                                     </a>
                                 </td>
