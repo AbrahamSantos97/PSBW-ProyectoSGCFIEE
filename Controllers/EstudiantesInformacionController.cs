@@ -242,7 +242,7 @@ namespace SGCFIEE.Controllers
                 List<TbExamenalumno> examen = new List<TbExamenalumno>();
                 List<AlumnoExamen> listexamen = new List<AlumnoExamen>();
                 AlumnoExamen datosexamen = new AlumnoExamen();
-                //TbRubrosexamenes rubro = new TbRubrosexamenes();
+                TbRubrosexamenes rubro = new TbRubrosexamenes();
                 List<TbHorario> horario = new List<TbHorario>();
                 List<CalificacionAlumno> listcali = new List<CalificacionAlumno>();
                 CalificacionAlumno cali = new CalificacionAlumno();
@@ -356,7 +356,7 @@ namespace SGCFIEE.Controllers
                                 datosfinal.fechafinserv = b.FechaFin;
                                 datosfinal.nombreempresa = c.Nombre;
                                 datosfinal.direccion = c.Direccion;
-                                //datosfinal.tiposervprac = b.Tipo;
+                                datosfinal.tiposervprac = b.Tipo;
                                 datosfinal.telefono = c.Telefono;
                                 listfinal.Add(datosfinal);
                                 datosfinal = new AlumnoFinal();
@@ -525,7 +525,7 @@ namespace SGCFIEE.Controllers
                 servprac.FechaInicio = final.fechainiserv;
                 servprac.FechaFin = final.fechafinserv;
                 servprac.REmpresa = final.rempresa;
-                //servprac.Tipo = final.tiposervprac;
+                servprac.Tipo = final.tiposervprac;
                 context.TbServiciopracticas.Add(servprac);
                 context.SaveChanges();
                 TempData["mensaje"] = "Dato guardado";

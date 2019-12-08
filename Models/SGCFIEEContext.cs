@@ -888,8 +888,6 @@ namespace SGCFIEE.Models
                 entity.Property(e => e.Nombre).HasColumnType("varchar(45)");
 
                 entity.Property(e => e.Telefono).HasColumnType("varchar(20)");
-
-                entity.Property(e => e.Tipo).HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<CtExperienciarecepcional>(entity =>
@@ -3080,6 +3078,8 @@ namespace SGCFIEE.Models
                 entity.Property(e => e.REmpresa)
                     .HasColumnName("R_Empresa")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.Tipo).HasColumnType("int(11)");
 
                 entity.HasOne(d => d.REmpresaNavigation)
                     .WithMany(p => p.TbServiciopracticas)
