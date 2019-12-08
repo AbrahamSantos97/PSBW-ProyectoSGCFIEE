@@ -83,6 +83,7 @@ namespace SGCFIEE.Controllers
                 usu = context.Usuarios.Where(s => s.Nombre.Equals(mat)).SingleOrDefault();
                 if(usu == null)
                 {
+                    datos.RStatus = 0;
                     context.Alumnos.Add(datos);
                     context.SaveChanges();
                     Alumnos alu = context.Alumnos.Last();
@@ -98,48 +99,17 @@ namespace SGCFIEE.Controllers
                     usunuevo.Contrasenia = passwo;
                     context.Usuarios.Add(usunuevo);
                     context.SaveChanges();
-                    try
-                    {
-                        to = alu.RDatosPersonNavigation.Correo;
-                        m.From = new MailAddress(from, "SGCFIEE");
-                        m.To.Add(new MailAddress(to));
-                        m.Subject = "Creacion de cuenta para el sgcfiee";
-                        m.BodyEncoding = System.Text.Encoding.UTF8;
-                        m.Body = "Cuenta: " +alu.Matricula + "\r\nContraseña: " +alu.RDatosPersonNavigation.ApellidoPaterno;
-                        m.IsBodyHtml = true;
-                        smtp.Host = "smtp.gmail.com";
-                        smtp.UseDefaultCredentials = true;
-                        smtp.Port = 587;
-                        smtp.Credentials = new NetworkCredential(from, pass);
-                        smtp.EnableSsl = true;
-                        smtp.Send(m);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.StackTrace);
-                    }
-
+                    EnviarCorreo("Crear cuenta",alu.RDatosPersonNavigation.Correo,alu.Matricula,alu.RDatosPersonNavigation.ApellidoPaterno);
+                }
+                else
+                {
+                    int idalu = usu.IdAlumno.Value;
+                    Alumnos alu2 = context.Alumnos.Where(s => s.IdAlumnos == idalu).Single();
+                    int alum = alu2.RDatosPerson.Value;
+                    DatosPersonales dp = context.DatosPersonales.Where(s => s.IdDatosPersonales == alum).Single();
+                    EnviarCorreo("Recordatorio de datos", dp.Correo,alu2.Matricula,dp.ApellidoPaterno);
                 }
                 TempData["Mensaje"] = "Datos registrados";
-                //HtmlToPdfConverter converter = new HtmlToPdfConverter();
-
-
-                //WebKitConverterSettings settings = new WebKitConverterSettings();
-                //settings.WebKitPath = Path.Combine(_hostingEnvironment.ContentRootPath, "QtBinariesWindows");
-                //converter.ConverterSettings = settings;
-
-                //PdfDocument document = converter.Convert("");
-
-                //MemoryStream ms = new MemoryStream();
-                //document.Save(ms);
-                //document.Close(true);
-
-                //ms.Position = 0;
-
-                //FileStreamResult fileStreamResult = new FileStreamResult(ms,"SGCFIEE/pdf");
-                //fileStreamResult.FileDownloadName = "crear.pdf";
-
-                //return fileStreamResult;
                 return RedirectToAction("Index");
 
             }
@@ -276,6 +246,9 @@ namespace SGCFIEE.Controllers
                 List<TbHorario> horario = new List<TbHorario>();
                 List<CalificacionAlumno> listcali = new List<CalificacionAlumno>();
                 CalificacionAlumno cali = new CalificacionAlumno();
+                List<TbInstanciafinalAlumno> instancia = new List<TbInstanciafinalAlumno>();
+                List<AlumnoFinal> listfinal = new List<AlumnoFinal>();
+                AlumnoFinal datosfinal = new AlumnoFinal();
                 pafi = context.TbPafisAlumno.Where(s => s.RAlumno == id).ToList<TbPafisAlumno>();
                 if (pafi != null)
                 {
@@ -368,6 +341,44 @@ namespace SGCFIEE.Controllers
                     }
                     ViewData["calificacion"] = listcali;
                 }
+                instancia = context.TbInstanciafinalAlumno.Where(s => s.IdTbInstanciaFinalAlumno == id).ToList();
+                if (instancia != null)
+                {
+                    foreach (var item in instancia)
+                    {
+                        if (item.RServPrac != null)
+                        {
+                            var b = context.TbServiciopracticas.Where(s => s.IdTbServicioPracticas == item.RServPrac).FirstOrDefault();
+                            if (b.REmpresa != null)
+                            {
+                                var c = context.CtEmpresaServPrac.Where(s => s.IdCtEmpresas == b.REmpresa).FirstOrDefault();
+                                datosfinal.fechafinserv = b.FechaInicio;
+                                datosfinal.fechafinserv = b.FechaFin;
+                                datosfinal.nombreempresa = c.Nombre;
+                                datosfinal.direccion = c.Direccion;
+                                //datosfinal.tiposervprac = b.Tipo;
+                                datosfinal.telefono = c.Telefono;
+                                listfinal.Add(datosfinal);
+                                datosfinal = new AlumnoFinal();
+                            }
+                        }
+                        if (item.RExpRep != null)
+                        {
+                            var a = context.CtExperienciarecepcional.Where(s => s.IdCtExperienciaRecepcional == item.RExpRep).FirstOrDefault();
+                            if (a.RAsesor != null)
+                            {
+                                var d = context.Academicos.Where(s => s.IdAcademicos == a.RAsesor).FirstOrDefault();
+                                datosfinal.nombreexpre = a.Nombre;
+                                datosfinal.fechafinexp = a.FechaFin;
+                                datosfinal.tipoexpre = a.Tipo;
+                                if (d != null) datosfinal.nombreasesor = d.Nombre;
+                                listfinal.Add(datosfinal);
+                                datosfinal = new AlumnoFinal();
+                            }
+                        }
+                    }
+                    ViewData["Instancias"] = listfinal;
+                }
 
                 datosalumno.IdDatosPersonales = id;
                 datosalumno.Nombre = datos.Nombre;
@@ -405,9 +416,13 @@ namespace SGCFIEE.Controllers
         [HttpGet]
         public IActionResult CrearCali([FromQuery] int idalum)
         {
+            int id= (int)HttpContext.Session.GetInt32("IdUsu");
             ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             using (sgcfieeContext context = new sgcfieeContext())
             {
+                Alumnos alu = context.Alumnos.Where(s => s.IdAlumnos == id).Single();
+                int idPE = alu.RProgramaEducativo.Value;
+
                 var a = context.Academicos.ToList();
                 ViewData["academicos"] = a;
                 var b = context.TipoPeriodo.ToList();
@@ -418,8 +433,16 @@ namespace SGCFIEE.Controllers
                 ViewData["experiencias"] = d;
                 var e = context.CtTipoCalificacion.ToList();
                 ViewData["tipocali"] = e;
-                var f = context.MapaCurricular.ToList();
-                ViewData["mapa"] = f;
+                List<ModeloMCadd> lista = (from z in context.MapaCurricular
+                                           join x in context.ExperienciaEducativa on z.IdExperienciaEducativa equals x.IdExperienciaEducativa
+                                           select
+                                           new ModeloMCadd
+                                           {
+                                               id = z.IdMapaCurricular,
+                                               mat = x.Nombre,
+                                               pe = z.IdProgramaEducativo.Value
+                                           }).Where(y => y.pe == idPE).ToList();
+                ViewData["mapa"] = lista;
                 ViewData["idalumno"] = idalum;
                 return View();
             }
@@ -469,16 +492,133 @@ namespace SGCFIEE.Controllers
             {
                 var alum = context.Alumnos.Where<Alumnos>(p => p.IdAlumnos == id).Single<Alumnos>();
                 if (alum == null) return NotFound();
-                context.Alumnos.Remove(alum);
+                alum.RStatus = 1;
+                context.Alumnos.Update(alum);
                 context.SaveChanges();
                 TempData["Mensaje"] = "Dato eliminado";
                 return RedirectToAction("Index");
             }
         }
+
+        [HttpGet]
+        public IActionResult CrearFinal([FromQuery] int idalum)
+        {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                var x = context.Academicos.ToList();
+                var y = context.CtEmpresaServPrac.ToList();
+                ViewData["academicos"] = x;
+                ViewData["idalumno"] = idalum;
+                ViewData["empresa"] = y;
+                return View();
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CrearServicio(AlumnoFinal final)
+        {
+            TbInstanciafinalAlumno instancia = new TbInstanciafinalAlumno();
+            TbServiciopracticas servprac = new TbServiciopracticas();
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                servprac.FechaInicio = final.fechainiserv;
+                servprac.FechaFin = final.fechafinserv;
+                servprac.REmpresa = final.rempresa;
+                //servprac.Tipo = final.tiposervprac;
+                context.TbServiciopracticas.Add(servprac);
+                context.SaveChanges();
+                TempData["mensaje"] = "Dato guardado";
+
+                instancia.RAlumno = final.ralumno;
+                instancia.RServPrac = servprac.IdTbServicioPracticas;
+                context.TbInstanciafinalAlumno.Add(instancia);
+                context.SaveChanges();
+                TempData["mesnaje"] = "dato guardado";
+
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CrearExprecpcional(AlumnoFinal exprecepcional)
+        {
+            TbInstanciafinalAlumno instancia = new TbInstanciafinalAlumno();
+            CtExperienciarecepcional experiencia = new CtExperienciarecepcional();
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                experiencia.Nombre = exprecepcional.nombreexpre;
+                experiencia.FechaFin = exprecepcional.fechafinexp;
+                experiencia.Tipo = exprecepcional.tipoexpre;
+                experiencia.RAsesor = exprecepcional.rasesor;
+                context.CtExperienciarecepcional.Add(experiencia);
+                context.SaveChanges();
+                TempData["Mnesjae"] = "Dato guardado";
+
+                instancia.RAlumno = exprecepcional.ralumno;
+                instancia.RExpRep = experiencia.IdCtExperienciaRecepcional;
+                context.TbInstanciafinalAlumno.Add(instancia);
+                context.SaveChanges();
+                TempData["mesnaje"] = "dato guardado";
+
+
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpGet]
+        public IActionResult CrearEmpresa()
+        {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CrearEmpresa(CtEmpresaServPrac empresa)
+        {
+            
+            using (sgcfieeContext context = new sgcfieeContext())
+            {
+                context.CtEmpresaServPrac.Add(empresa);
+                context.SaveChanges();
+                TempData["mensaje"] = "dato guardado";
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpGet]
+        public IActionResult CrearReporte([FromQuery] int idalum)
+        {
+            ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            ViewData["idalumno"] = idalum;
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public void EnviarCorreo(String asunto,String correo, String cuenta, String contrasena)
+        {
+            try
+            {
+                to = correo;
+                m.From = new MailAddress(from, "SGCFIEE");
+                m.To.Add(new MailAddress(to));
+                m.Subject = asunto;
+                m.BodyEncoding = System.Text.Encoding.UTF8;
+                m.Body = "Cuenta: " + cuenta + "\r\nContraseña: " + contrasena;
+                m.IsBodyHtml = true;
+                smtp.Host = "smtp.gmail.com";
+                smtp.UseDefaultCredentials = true;
+                smtp.Port = 587;
+                smtp.Credentials = new NetworkCredential(from, pass);
+                smtp.EnableSsl = true;
+                smtp.Send(m);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
     }
 }

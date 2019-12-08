@@ -7,7 +7,7 @@
     var x = (IEnumerable<TbSalones>)ViewData["salones"];
     var y = (IEnumerable<ExperienciaEducativa>)ViewData["experiencias"];
     var z = (IEnumerable<CtTipoCalificacion>)ViewData["tipocali"];
-    var u = (IEnumerable<MapaCurricular>)ViewData["mapa"];
+    var u = (IEnumerable<ModeloMCadd>)ViewData["mapa"];
     var id = ViewData["idalumno"];
 }
 
@@ -78,7 +78,7 @@
                                                         <select asp-for="IdMapaCurricular" class="form-control" id="areaexp">
                                                             @foreach (var item in u)
                                                             {
-                                                                <option value="@item.IdMapaCurricular">@Html.DisplayFor(modelItem => item.IdExperienciaEducativaNavigation.Nombre) </option>
+                                                                <option value="@item.id">@Html.DisplayFor(modelItem => item.mat) </option>
                                                             }
                                                         </select>
                                                     </div>

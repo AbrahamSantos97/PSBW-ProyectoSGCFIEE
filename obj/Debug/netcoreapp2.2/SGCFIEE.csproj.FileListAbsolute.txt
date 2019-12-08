@@ -332,3 +332,6 @@ C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\net
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesBuzon\SeleccionarQueja.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesBuzon\TablaInfrestructura.g.cshtml.cs
 C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesBuzon\TablaAcademicos.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesInformacion\CrearEmpresa.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesInformacion\CrearFinal.g.cshtml.cs
+C:\Users\abrah\Documents\TrabajoWEBSGCFIEE\SGCFIEE\SGCFIEE\SGCFIEE\obj\Debug\netcoreapp2.2\Razor\Views\EstudiantesInformacion\CrearReporte.g.cshtml.cs

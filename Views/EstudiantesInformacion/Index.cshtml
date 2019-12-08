@@ -61,8 +61,10 @@
                                     <a asp-route-id="@item.id" asp-controller="EstudiantesInformacion" asp-action="Editar" class="btn btn-primary btn-xs editar" title="Editar">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a asp-route-id="@item.id" asp-controller="EstudiantesInformacion" asp-action="Eliminar" class="btn btn-danger btn-xs eliminar" title="Eliminar">
+                                    <a data-value="@item.id" data-controlador="EstudiantesInformacion" data-accion="Eliminar" name="laeliminacion" class="btn btn-danger btn-xs eliminar" title="Eliminar">
                                         <i class="fa fa-trash-o "></i>
+                                    </a>
+                                    <a data-controlador="EstudiantesInformacion" data-accion="Index" hidden name="actualizar">
                                     </a>
                                 </td>
                             </tr>

@@ -12,8 +12,10 @@ var EstudiantePafi = (function () {
                     idpafi = $(this).parents("tr").find("td").eq(0).html();
                     EstudiantePafi.muestraInfoPafi(idpafi);
                 });
-                $(".bajapafi").on('click', function () {
-                    idpafi = $(this).parents("tr").find("td").eq(0).html();
+                $('a[name="laeliminacion"]').on('click', function () {
+                    var value = $(this).data('value');
+                    var controlador = $(this).data('controlador');
+                    var accion = $(this).data('accion');
                     swal({
                         title: "Estas seguro?",
                         text: "Se eliminara el registro",
@@ -22,9 +24,10 @@ var EstudiantePafi = (function () {
                         confirmButtonColor: "#DD6B55",
                         confirmButtonText: "Confirmar",
                         closeOnConfirm: false
-                    }, function () {
-                        swal("Eliminado exitosamente!", "Click en el bot\u00F3n!", "success");
-                        EstudiantePafi.darBajaPafi(idpafi);
+                    }, function () {                            
+                            $.get('' + controlador + '/' + accion, { id: value }).then(function () {
+                                swal("Eliminado exitosamente!", "Click en el bot\u00F3n!", "success");
+                            })
                     });
 
                 });

@@ -64,8 +64,10 @@
                                         <a asp-route-id="@item.idPafi" asp-controller="EstudiantesPafis" asp-action="FormEditar" class="btn btn-primary btn-xs editar" title="Editar">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a asp-route-id="@item.idPafi" asp-action="Eliminar" asp-controller="EstudiantesPafis" class="btn btn-danger btn-xs eliminar" title="Eliminar">
+                                        <a data-value="@item.idPafi" data-controlador="EstudiantesPafis" data-accion="Eliminar" name="laeliminacion" class="btn btn-danger btn-xs eliminar" title="Eliminar">
                                             <i class="fa fa-trash-o "></i>
+                                        </a>
+                                        <a data-controlador="EstudiantesPafis" data-accion="Index" hidden name="actualizar">
                                         </a>
                                     }
                                     @if (x == 3)

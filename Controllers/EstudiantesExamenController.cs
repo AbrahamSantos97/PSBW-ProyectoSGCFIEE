@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Nancy.Json;
 using SGCFIEE.Models;
 
 namespace SGCFIEE.Controllers
@@ -14,27 +15,31 @@ namespace SGCFIEE.Controllers
         public IActionResult Index()
         {
             ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
+            ViewData["idAlu"] = (int)HttpContext.Session.GetInt32("IdUsu");
             using (sgcfieeContext context = new sgcfieeContext())
             {
                 var x = context.TbRubrosexamenes.ToList();
                 ViewData["rubros"] = x;
                 return View();
             }
-
+                
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Crear(List<TbExamenalumno> examen)
+        public IActionResult Crear(JSON examen)
         {
+            JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+             List<TbExamenalumno> lista =
+                json_serializer.Deserialize<List<TbExamenalumno>>(examen.json);
+            //  AlumnoExamenTB list = new AlumnoExamenTB();
             using (sgcfieeContext context = new sgcfieeContext())
             {
-                foreach (var item in examen)
+                foreach (var item in lista)
                 {
                     context.TbExamenalumno.Add(item);
                     context.SaveChanges();
-                    TempData["mensaje"] = "Dato guardado";
-                }
-                return RedirectToAction("/Home/Default");
+                }                
+                TempData["mensaje"] = "Dato guardado";
+                return RedirectToAction("Index");
             }
         }
     }

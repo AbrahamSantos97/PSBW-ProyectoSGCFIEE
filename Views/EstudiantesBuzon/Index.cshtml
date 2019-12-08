@@ -91,7 +91,8 @@
                                                     <select asp-for="RAcademicos" class="form-control" id="areaexp">
                                                         @foreach (var item in z)
                                                         {
-                                                            <option value="@item.IdAcademicos">@Html.DisplayFor(modelItem => item.Nombre) </option>
+                                                            var name = item.Nombre + " " + item.ApellidoPaterno + " " + item.ApellidoMaterno;
+                                                            <option value="@item.IdAcademicos">@Html.DisplayFor(modelItem => name) </option>
                                                         }
                                                     </select> <br />
                                                     <label>Seleccione periodo actual</label>

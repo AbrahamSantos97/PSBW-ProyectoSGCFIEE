@@ -327,8 +327,9 @@ namespace SGCFIEE.Controllers
                 pafi = context.PafisAcademicos.Where(s => s.IdPafis == id).Single();
                 context.PafisAcademicos.Remove(pafi);
                 context.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
         }
     }
 }

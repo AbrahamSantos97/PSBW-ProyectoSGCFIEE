@@ -329,28 +329,9 @@
     <!--select2-->
     <script src="~/assets/plugins/select2/js/select2.js"></script>
     <script src="~/assets/js/pages/select2/select2-init.js"></script>
-
-
-    <script src="assets/js/pages/informacion_complementaria/estudiantes/complemento_estudiantes.js"></script>
-    <script src="assets/js/pages/informacion_complementaria/academicos/complemento_academico.js"></script>
-    <script src="~/assets/js/jquery-form.js"></script>
-    <script src="~/assets/js/index.js"></script>
-    <script src="assets/js/pages/academicos/academicos_datosgenerales.js"></script>
-    <script src="assets/js/pages/academicos/academicos_pafis.js"></script>
-    <script src="assets/js/pages/academicos/academicos_tutoria.js"></script>
-    <script src="assets/js/pages/academicos/academicos_evaluaciones.js"></script>
-    <script src="assets/js/pages/academicos/academicos_produccion.js"></script>
-    <script src="assets/js/pages/academicos/academicos_instructorEC.js"></script>
-    <script src="assets/js/pages/academicos/academicos_coordinadores.js"></script>
-    <script src="assets/js/pages/academicos/academicos_CT.js"></script>
-    <script src="assets/js/pages/academicos/academicos_EE.js"></script>
-
-    <script src="assets/js/pages/estudiantes/estudiantes_generales.js"></script>
-    <script src="assets/js/pages/estudiantes/estudiantes_pafis.js"></script>
-    <script src="assets/js/pages/estudiantes/estudiantes_movilidad.js"></script>
-    <script src="assets/js/pages/estudiantes/estudiantes_eventos.js"></script>
-    <script src="assets/js/pages/estudiantes/estudiantes_buzon.js"></script>
     <script src="~/assets/js/pages/estudiantes/estudiantes_datos.js"></script>
+    <script src="~/assets/js/pages/ExamenAlumno.js"></script>
+    <script src="~/assets/js/jquery-form.js"></script>
     <script type="text/javascript" src="~/assets/js/pages/jspdf.min.js"></script>
     <script type="text/javascript" src="~/assets/js/pages/html2canvas.js"></script>
 
@@ -369,6 +350,32 @@
             });
         });
 
+    </script>
+    <script>
+        $('a[name="laeliminacion"]').on('click', function () {
+                    var value = $(this).data('value');
+                    var controlador = $(this).data('controlador');
+                    var accion = $(this).data('accion');
+                    swal({
+                        title: "Estas seguro?",
+                        text: "Se eliminara el registro",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Confirmar",
+                        closeOnConfirm: false
+                    }, function () {                            
+                            $.get('' + controlador + '/' + accion, { id: value }).then(function () {
+                                $.get('' + controlador + '/' + 'Index').then(function () {
+                                    var newDoc = document.open("text/html", "replace");
+                                    newDoc.write(arguments[0]);
+                                    newDoc.close();
+                                    swal("Eliminado exitosamente!", "Click en el bot\u00F3n!", "success");
+                                })
+                            })
+                    });
+
+                });
     </script>
     <!-- end js include path -->
 </body>

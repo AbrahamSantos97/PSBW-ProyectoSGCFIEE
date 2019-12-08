@@ -4,7 +4,7 @@
 
     ViewData["Title"] = "Crear";
     Layout = "~/Views/Home/Principal.cshtml";
-
+    var idAlu = (int)ViewData["idAlu"];
     var rubro = (IEnumerable<TbRubrosexamenes>)ViewData["rubros"];
 }
 
@@ -20,7 +20,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <form asp-action="Crear" asp-antiforgery="true">
-                            <div class="tab-pane" id="tab3">
+                            <div class="tab-pane" id="examenAlumno">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
                                         <div class="card-head">
@@ -30,27 +30,28 @@
                                             <div class="row">
                                                 @foreach (var item in rubro)
                                                 {
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            <strong asp-for="CalificacionExamen">@Html.DisplayFor(modelItem => item.RubroExamen)</strong>
-                                                            <input asp-for="CalificacionExamen" value="" type="number" class="form-control" placeholder="Calificacion">
-                                                            <input asp-for="IdRubroExamen" value="@item.IdTbRubrosExamenes" type="hidden">
-                                                        </div>
-                                                        <strong>Tipo Examen</strong>
-                                                        <select asp-for="TipoExamen" class="form-control" id="programa">
-
-                                                            <option value="1">Examen ingreso</option>
-                                                            <option value="2">Examen interno</option>
-                                                            }
-                                                        </select> <br /> <br />
+                                                <div class="col-md-6 col-sm-6 calificacion">
+                                                    <div class="form-group">
+                                                        <strong asp-for="CalificacionExamen">@Html.DisplayFor(modelItem => item.RubroExamen)</strong>
+                                                        <input asp-for="CalificacionExamen" value="" type="number" class="form-control" placeholder="Calificacion" name="calificacion">
+                                                        <input asp-for="IdRubroExamen" value="@item.IdTbRubrosExamenes" type="hidden" name="rubro">
+                                                         <input asp-for="IdAlumno" value="@idAlu" type="hidden" name="alumno">
                                                     </div>
+                                                    <strong>Tipo Examen</strong>
+                                                    <select asp-for="TipoExamen" class="form-control" name="tipoExamen">
 
+                                                        <option value="1">Examen ingreso</option>
+                                                        <option value="2">Examen interno</option>
+                                                        }
+                                                    </select> <br/> <br />
+                                                </div>
+                                                    
                                                 }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <input id="enviadatose" type="submit" value="Guardar" class="btn btn-success btn-sm m-b-10">
+                                <input id="enviadatose" type="button" value="Guardar" class="btn btn-success btn-sm m-b-10">
                             </div>
                         </form>
                     </div>

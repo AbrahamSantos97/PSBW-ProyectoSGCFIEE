@@ -68,39 +68,18 @@
                                                         <span asp-validation-for="RDatosPersonNavigation.EstadoCivil" class="text-danger"></span>
                                                     </div>
                                                     <div class="form-group">
-                                                        <div class="radio p-0">
-                                                            <input asp-for="RDatosPersonNavigation.Genero" checked="true" type="radio" name="optionsRadios1" id="genh" value="1">
-                                                            <label asp-for="RDatosPersonNavigation.Genero" for="genh">
-                                                                Hombre
-                                                            </label>
-                                                            <span asp-validation-for="RDatosPersonNavigation.Genero" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="radio p-0">
-                                                            <input asp-for="RDatosPersonNavigation.Genero" type="radio" name="optionsRadios1" id="genm" value="2">
-                                                            <label asp-for="RDatosPersonNavigation.Genero" for="genm">
-                                                                Mujer
-                                                            </label>
-                                                            <span asp-validation-for="RDatosPersonNavigation.Genero" class="text-danger"></span>
-                                                        </div>
+                                                        <label>Género</label>
+                                                        <select asp-for="RDatosPersonNavigation.Genero" class="form-control" id="programa">
+                                                            <option value="1">Hombre </option>
+                                                            <option value="2">Mujer </option>
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>Trabaja</label><br />
-                                                        <div class="form-group">
-                                                            <div class="radio p-0">
-                                                                <input asp-for="RDatosPersonNavigation.Trabaja" checked="true" type="radio" name="optionsRadios2" id="trabajosi" value="1">
-                                                                <label asp-for="RDatosPersonNavigation.Trabaja" for="trabajosi">
-                                                                    Si
-                                                                </label>
-                                                                <span asp-validation-for="RDatosPersonNavigation.Trabaja" class="text-danger"></span>
-                                                            </div>
-                                                            <div class="radio p-0">
-                                                                <input asp-for="RDatosPersonNavigation.Trabaja" type="radio" name="optionsRadios2" id="trabajono" value="2">
-                                                                <label asp-for="RDatosPersonNavigation.Trabaja" for="trabajono">
-                                                                    No
-                                                                </label>
-                                                                <span asp-validation-for="RDatosPersonNavigation.Trabaja" class="text-danger"></span>
-                                                            </div>
-                                                        </div>
+                                                        <label>Trabaja</label>
+                                                        <select asp-for="RDatosPersonNavigation.Trabaja" class="form-control" id="programa">
+                                                            <option value="1">Si </option>
+                                                            <option value="2">No </option>
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label asp-for="RDatosPersonNavigation.IngresoMensual">Ingreso mensual aproximado</label>
