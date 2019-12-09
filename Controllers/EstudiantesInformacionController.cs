@@ -52,9 +52,10 @@ namespace SGCFIEE.Controllers
                                   ApellidoPaterno = d.ApellidoPaterno,
                                   ApellidoMaterno = d.ApellidoMaterno,
                                   Matricula = a.Matricula,
-                                  NombrePro = p.Nombre
+                                  NombrePro = p.Nombre,
+                                  Status = a.RStatus.Value
                               }
-                              ).ToList();
+                              ).Where(s => s.Status == 0).ToList();
                 return View(ListAlumno);
             }
 
@@ -63,7 +64,6 @@ namespace SGCFIEE.Controllers
         [HttpGet]
         public IActionResult Crear()
         {
-            //ViewData["tipo"] = (int)HttpContext.Session.GetInt32("TipoUsuario");
             ViewData["tipo"] = 3;
             using (sgcfieeContext context = new sgcfieeContext())
             {
@@ -492,7 +492,7 @@ namespace SGCFIEE.Controllers
             {
                 var alum = context.Alumnos.Where<Alumnos>(p => p.IdAlumnos == id).Single<Alumnos>();
                 if (alum == null) return NotFound();
-                alum.RStatus = 1;
+                alum.RStatus = 2;
                 context.Alumnos.Update(alum);
                 context.SaveChanges();
                 TempData["Mensaje"] = "Dato eliminado";

@@ -13,6 +13,7 @@ namespace SGCFIEE.Models
         public string ApellidoMaterno { get; set; }
         public string Matricula { get; set; }
         public string NombrePro { get; set; }
+        public int Status { get; set; }
 
     }
 }

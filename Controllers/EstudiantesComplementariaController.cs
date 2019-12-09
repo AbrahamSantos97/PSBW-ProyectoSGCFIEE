@@ -275,7 +275,7 @@ namespace SGCFIEE.Controllers
                 context.AreaExperienciaEducativa.Update(area);
                 context.SaveChanges();
                 TempData["mensaje"] = "datos acrualizados correctamente";
-                return RedirectToAction("MosrarArea");
+                return RedirectToAction("MostrarArea");
             }
         }
         [HttpGet]
@@ -576,7 +576,7 @@ namespace SGCFIEE.Controllers
             using (sgcfieeContext context = new sgcfieeContext())
             {
                 var x = context.TipoEventos.ToList();
-                ViewData["tipo"] = x;
+                ViewData["e"] = x;
                 return View();
             }
         }
@@ -655,7 +655,5 @@ namespace SGCFIEE.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
     }
 }
