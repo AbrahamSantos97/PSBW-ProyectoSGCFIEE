@@ -341,7 +341,7 @@ namespace SGCFIEE.Controllers
                     }
                     ViewData["calificacion"] = listcali;
                 }
-                instancia = context.TbInstanciafinalAlumno.Where(s => s.IdTbInstanciaFinalAlumno == id).ToList();
+                instancia = context.TbInstanciafinalAlumno.Where(s => s.RAlumno == id).ToList();
                 if (instancia != null)
                 {
                     foreach (var item in instancia)

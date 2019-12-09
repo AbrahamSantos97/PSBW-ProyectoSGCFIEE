@@ -7,9 +7,9 @@ namespace SGCFIEE.Models
 {
     public class AlumnoFinal
     {
-        public int ralumno { get; set; }
-        public int rexprep { get; set; }
-        public int rservprac { get; set; }
+        public int? ralumno { get; set; }
+        public int? rexprep { get; set; }
+        public int? rservprac { get; set; }
         public int rasesor { get; set; }
         public int rempresa {get; set;}
         public string nombreexpre { get; set; }

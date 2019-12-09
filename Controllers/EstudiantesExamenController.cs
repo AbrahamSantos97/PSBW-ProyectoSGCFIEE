@@ -39,7 +39,7 @@ namespace SGCFIEE.Controllers
                     context.SaveChanges();
                 }                
                 TempData["mensaje"] = "Dato guardado";
-                return RedirectToAction("Index");
+                return RedirectToAction("Default","Home");
             }
         }
     }

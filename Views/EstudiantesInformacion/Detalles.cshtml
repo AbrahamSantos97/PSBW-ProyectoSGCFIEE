@@ -449,31 +449,35 @@
                                     <div class="row">
                                         @foreach (var item in final)
                                         {
-                                            <div class="col-md-6 col-6">
-                                                <hr>
-                                                <h4 class="font-bold">Experiencia Recepcional</h4>
-                                                <hr>
-                                                <p>@Html.DisplayFor(modelItem => item.nombreexpre)</p>
-                                                <p>
-                                                    @if (item.tipoexpre == 1)
-                                                    {
-                                                    <p>TESIS</p>}
-                                                @if (item.tipoexpre == 2)
-                                                {<p>TESINA</p>}
-                                                @if (item.tipoexpre == 3)
-                                                {<p> PROYECTO PRACTICO TECNICO</p>}
-                                                @if (item.tipoexpre == 4)
-                                                {<p>PROYECTO PRACTICO</p>}
-                                                @if (item.tipoexpre == 5)
-                                                {<p>MONOGRAFIA</p>}
-                                                @if (item.tipoexpre == 6)
-                                                {<p>EXAMEN</p>}
-                                                @if (item.tipoexpre == 7)
-                                                {<p>PROMEDIO</p>}
-                                                </p>
-                                                <p>@Html.DisplayFor(modelItem => item.nombreasesor)</p>
-                                                <p>@Html.DisplayFor(modelItem => item.fechafinexp)</p>
-                                            </div>
+                                            @if (item.rexprep != null)
+                                            {
+                                                <div class="col-md-6 col-6">
+                                                    <hr>
+                                                    <h4 class="font-bold">Experiencia Recepcional</h4>
+                                                    <hr>
+                                                    <p>@Html.DisplayFor(modelItem => item.nombreexpre)</p>
+                                                    <p>
+                                                        @if (item.tipoexpre == 1)
+                                                        {
+                                                        <p>TESIS</p>}
+                                                        @if (item.tipoexpre == 2)
+                                                        {<p>TESINA</p>}
+                                                        @if (item.tipoexpre == 3)
+                                                        {<p> PROYECTO PRACTICO TECNICO</p>}
+                                                        @if (item.tipoexpre == 4)
+                                                        {<p>PROYECTO PRACTICO</p>}
+                                                        @if (item.tipoexpre == 5)
+                                                        {<p>MONOGRAFIA</p>}
+                                                        @if (item.tipoexpre == 6)
+                                                        {<p>EXAMEN</p>}
+                                                        @if (item.tipoexpre == 7)
+                                                        {<p>PROMEDIO</p>}
+                                                        </p>
+                                                        <p>@Html.DisplayFor(modelItem => item.nombreasesor)</p>
+                                                        <p>@Html.DisplayFor(modelItem => item.fechafinexp)</p>
+                                                    </div>
+                                                }
+
                                         }
                                     </div>
                                 </div>

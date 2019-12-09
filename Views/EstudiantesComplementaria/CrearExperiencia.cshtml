@@ -40,12 +40,12 @@
                                                     <!-- text input -->
                                                     <div class="form-group">
                                                         <label asp-for="Nombre">Nombre Experiencia Educativa</label>
-                                                        <input asp-for="Nombre" type="text" class="form-control" placeholder="Nombre de experiencia educativa">
+                                                        <input asp-for="Nombre" type="text" class="form-control" placeholder="Nombre de experiencia educativa" required="required">
                                                         <span asp-validation-for="Nombre" class="text-danger"></span>
                                                     </div>
                                                     <div class="form-group">
                                                         <label asp-for="Creditos">Creditos</label>
-                                                        <input asp-for="Creditos" type="number" class="form-control" placeholder="Creditos">
+                                                        <input asp-for="Creditos" type="number" class="form-control" placeholder="Creditos" required="required">
                                                         <span asp-validation-for="Creditos" class="text-danger"></span>
                                                     </div>
                                                     <div class="form-group">
@@ -60,14 +60,12 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="form-group">
                                                         <label asp-for="Horas">Horas</label>
-                                                        <input asp-for="Horas" type="number" class="form-control" placeholder="Horas">
+                                                        <input asp-for="Horas" type="number" class="form-control" placeholder="Horas" required="required">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>IES</label>
                                                         <select class="form-control" id="areaexp">
-                                                            <c:forEach items="${requestScope.listinst}" var="listinst">
-                                                                <option value="${listinst.id}">${listinst.nombre} </option>
-                                                            </c:forEach>
+                                                                <option value=""> </option>
                                                         </select>
                                                     </div>
                                                 </div>

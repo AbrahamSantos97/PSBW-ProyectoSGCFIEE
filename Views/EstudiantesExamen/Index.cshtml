@@ -33,7 +33,7 @@
                                                 <div class="col-md-6 col-sm-6 calificacion">
                                                     <div class="form-group">
                                                         <strong asp-for="CalificacionExamen">@Html.DisplayFor(modelItem => item.RubroExamen)</strong>
-                                                        <input asp-for="CalificacionExamen" value="" type="number" class="form-control" placeholder="Calificacion" name="calificacion">
+                                                        <input asp-for="CalificacionExamen" value="" type="number" class="form-control" placeholder="Calificacion" name="calificacion" required="required">
                                                         <input asp-for="IdRubroExamen" value="@item.IdTbRubrosExamenes" type="hidden" name="rubro">
                                                          <input asp-for="IdAlumno" value="@idAlu" type="hidden" name="alumno">
                                                     </div>

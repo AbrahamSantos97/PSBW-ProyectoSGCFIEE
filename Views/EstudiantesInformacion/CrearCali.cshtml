@@ -42,7 +42,7 @@
                                                     <input type="hidden" asp-for="idalumno" value="@id" />
                                                     <div class="form-group">
                                                         <label asp-for="Nrc">NRC del academico</label>
-                                                        <input asp-for="Nrc" id="nrcaca" type="text" class="form-control" placeholder="NRC">
+                                                        <input asp-for="Nrc" id="nrcaca" type="text" class="form-control" placeholder="NRC" required="required">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Seleccione el nombre del academico</label>
@@ -84,7 +84,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label asp-for="Calificacion">Calificacion</label>
-                                                        <input asp-for="Calificacion" id="calialum" type="number" class="form-control" placeholder="Calificacion">
+                                                        <input asp-for="Calificacion" id="calialum" type="number" class="form-control" placeholder="Calificacion" required="required">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Seleccione el tipo de calificación</label>

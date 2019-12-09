@@ -75,7 +75,7 @@ namespace SGCFIEE.Controllers
             using(sgcfieeContext context = new sgcfieeContext())
             {
                 usu = context.Usuarios.Where(e => e.Nombre.Equals(user.matricula) && e.Contrasenia.Equals(user.password)).SingleOrDefault();
-                if (usu.Nombre.Equals(user.matricula) && usu.Contrasenia.Equals(user.password))
+                if (usu != null)
                 {
                     x = 1;
                 }

@@ -31,12 +31,12 @@
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-group">
                                                             <label asp-for="Nombre">Nombre de materia/curso del pafi que desea solicitar</label>
-                                                            <input asp-for="Nombre" id="nom" type="text" class="form-control" placeholder="Nombre ...">
+                                                            <input asp-for="Nombre" id="nom" type="text" class="form-control" placeholder="Nombre ..." required="required">
                                                             <span asp-validation-for="Nombre" class="text-danger"></span>
                                                         </div>
                                                         <div class="form-group">
                                                             <label asp-for="Horario">Horario posible</label>
-                                                            <input asp-for="Horario" id="horario" type="text" class="form-control" placeholder="Horario posible ...">
+                                                            <input asp-for="Horario" id="horario" type="text" class="form-control" placeholder="Horario posible ..." required="required">
                                                             <span asp-validation-for="Horario" class="text-danger"></span>
                                                         </div>
                                                         <div class="form-group">
